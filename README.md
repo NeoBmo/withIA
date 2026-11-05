@@ -5,8 +5,8 @@ uso a diario, con el porqué de cada decisión.
 
 > **In English:** how I (a self-taught frontend developer) work with AI coding
 > agents — Claude Code as the main tool, OpenCode with free models as the
-> secondary one. The content is in Spanish; the config files are copy-paste
-> ready. Start with [workflow.md](workflow.md) and [tools/](tools/README.md).
+> secondary one. Both share one process in `core/AGENTS.md`. The content is in
+> Spanish. Start with [workflow.md](workflow.md) and [adapters/](adapters/).
 
 ## Quién escribe esto
 
@@ -35,7 +35,8 @@ copiarlo, discutirlo o descartarlo.
 | [practices/](practices/) | Prácticas concretas, una por archivo |
 | [tools/](tools/README.md) | Lo que uso: MCP, skills, agentes y plugins, con veredicto |
 | [rejected.md](rejected.md) | Lo que evalué y descarté o dejé en espera, y por qué |
-| [config/](config/) | Mi `CLAUDE.md` global y `settings.json`, listos para adaptar |
+| [core/AGENTS.md](core/AGENTS.md) | La doctrina común: la fuente única del proceso |
+| [adapters/](adapters/) | Instalación para [Claude Code](adapters/claude-code/README.md) y para [OpenCode gratis](adapters/opencode/README.md) |
 
 ### Prácticas
 
@@ -46,5 +47,7 @@ copiarlo, discutirlo o descartarlo.
 
 ## Herramientas principales
 
-- **Claude Code** (app de escritorio y CLI): herramienta principal.
-- **OpenCode**: secundaria, sólo con modelos gratuitos.
+El proceso es el mismo con cualquiera de las dos; cambia quién lo ejecuta.
+
+- **Claude Code** (app de escritorio y CLI): la principal, con modelos de pago.
+- **OpenCode**: la secundaria, sólo con modelos gratuitos.

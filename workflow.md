@@ -1,5 +1,8 @@
 # El bucle del coordinador
 
+Esta página explica el porqué con mi experiencia. Las reglas exactas, las que
+leen los agentes, están en [core/AGENTS.md](core/AGENTS.md).
+
 La sesión principal con el agente es el **coordinador**: habla conmigo, elige la
 estrategia, reparte el trabajo y juzga el resultado. No delega lo que depende de
 nuestra conversación, porque un subagente empieza sin ese contexto.
@@ -7,7 +10,7 @@ nuestra conversación, porque un subagente empieza sin ese contexto.
 ```
 entender → planificar (si aporta) → actuar → evaluar con evidencia
               ↑                                        │
-              └────────── ajustar (máx. 3 vueltas) ←───┘
+              └────────── ajustar (máx. 3 intentos) ←───┘
                                                        │
                                               autoexamen al cerrar
 ```
@@ -50,8 +53,8 @@ pasa", "en móvil a 375 px no hay scroll horizontal". "Que funcione" no vale.
 ## 5. Ajustar y repetir
 
 Si algo falla, se vuelve al paso 3 **con la causa encontrada** (depuración
-sistemática, no prueba y error). Tres vueltas sin progreso → se para y me lo
-cuenta.
+sistemática, no prueba y error). Máximo 3 intentos: el inicial y 2 correcciones.
+Al tercer fallo se para y me lo cuenta.
 
 ## 6. Autoexamen al cerrar
 

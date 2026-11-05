@@ -55,7 +55,6 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "opus",
   "hooks": {
     "PreToolUse": [
       {
@@ -63,7 +62,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"C:/Users/BMO/.claude/hooks/block-commit-on-main.js\"",
+            "command": "node \"$HOME/.claude/hooks/block-commit-on-main.js\"",
             "if": "Bash(*git*commit*)",
             "timeout": 15
           }
@@ -76,25 +75,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"C:/Users/BMO/.claude/hooks/check-encoding.js\"",
+            "command": "node \"$HOME/.claude/hooks/check-encoding.js\"",
             "timeout": 15
           }
         ]
       }
     ]
-  },
-  "outputStyle": "Explicativo",
-  "language": "spanish",
-  "modelSettings": {
-    "claude-opus-5-5": {
-      "effortLevel": "high"
-    },
-    "claude-haiku-5-5": {
-      "effortLevel": "high"
-    }
-  },
-  "autoUpdatesChannel": "latest",
-  "theme": "dark",
-  "agentPushNotifEnabled": true,
-  "enableWorkflows": true
+  }
 }

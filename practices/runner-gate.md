@@ -15,11 +15,9 @@ Antes de implementar se fija qué demuestra que está hecho.
 ## La puerta de runner
 
 Si el proyecto tiene tests, se ejecutan **siempre**, aunque el cambio sea de una
-línea. Se detectan por señales del propio repo:
-
-- `scripts.test` en `package.json`
-- `pyproject.toml`, `Cargo.toml`, `go.mod`
-- configuración de CI
+línea. Se detectan por señales del propio repo, como `scripts.test` en
+`package.json` o la configuración de CI. La lista completa y los perfiles están
+en [core/AGENTS.md](../core/AGENTS.md).
 
 Si no hay tests, el agente lo **dice** y verifica de otra forma (build,
 navegador, ejecución manual). Lo que no vale es callarlo.

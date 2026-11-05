@@ -12,7 +12,7 @@ El modelo puede olvidar una instrucción; no puede saltarse un permiso denegado.
 
 ## Permisos
 
-En [config/settings.json](../config/settings.json):
+En [adapters/claude-code/settings.json](../adapters/claude-code/settings.json):
 
 - **`deny`**: leer `.env`, claves, credenciales; `git push --force`,
   `git reset --hard`, `git clean`; la ejecución arbitraria de JS en Playwright.
