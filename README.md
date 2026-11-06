@@ -48,3 +48,8 @@ copiarlo, discutirlo o descartarlo.
 
 - **Claude Code** (app de escritorio y CLI): herramienta principal.
 - **OpenCode**: secundaria, sólo con modelos gratuitos.
+
+## Licencia
+
+[MIT](LICENSE). Las herramientas de terceros que enlazo conservan su propia
+licencia.
