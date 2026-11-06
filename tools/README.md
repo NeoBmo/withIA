@@ -3,14 +3,14 @@
 Sólo aparece lo que pasó la [puerta de admisión](../practices/tool-admission.md)
 y uso de verdad. Lo descartado o en espera está en [rejected.md](../rejected.md).
 
-Última revisión: 2026-10-28. Los veredictos caducan a los 90 días.
+Última revisión: 2026-11-05. Los veredictos caducan a los 90 días.
 
 ## MCP
 
 | Herramienta | Para qué | Condiciones |
 |---|---|---|
 | [Engram](https://github.com/Gentleman-Programming/engram) | Memoria entre sesiones: decisiones, bugs, convenciones. Local, SQLite + FTS5 | Versión fijada; sólo el perfil `agent`; sync en la nube desactivado |
-| [Playwright MCP](https://github.com/microsoft/playwright-mcp) | Probar UI desde el agente: WebKit/Firefox, reduced-motion, uso desde terminal | `browser_run_code_unsafe` denegado en permisos |
+| [Playwright MCP](https://github.com/microsoft/playwright-mcp) | Probar UI desde el agente: WebKit/Firefox, reduced-motion, uso desde terminal | Versión exacta (nunca `@latest`), `--isolated` y `--headless`; `browser_run_code_unsafe` denegado en permisos |
 
 ## Skills
 
@@ -22,7 +22,7 @@ y uso de verdad. Lo descartado o en espera está en [rejected.md](../rejected.md
 | `vet` | Propia | Ejecuta la puerta de admisión y registra el veredicto |
 | `discover` | Propia | Prepara un repo nuevo: detecta stack, tests y convenciones y escribe su `CLAUDE.md` |
 | `sdd` | Propia | Spec-Driven Development para cambios grandes |
-| `systematic-debugging` | Propia | Encontrar la causa antes de proponer un arreglo |
+| `systematic-debugging` | [Superpowers](https://github.com/obra/superpowers), de Jesse Vincent (MIT) | Encontrar la causa antes de proponer un arreglo. Copia local con cambios mínimos |
 | `grilling` | Propia | Que la IA me cuestione un plan antes de ejecutarlo |
 
 ## Agentes

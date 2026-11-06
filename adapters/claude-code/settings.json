@@ -44,7 +44,8 @@
       "Bash(git branch -D *)",
       "Bash(rm -rf /*)",
       "Bash(rm -rf ~*)",
-      "mcp__plugin_playwright_playwright__browser_run_code_unsafe"
+      "mcp__plugin_playwright_playwright__browser_run_code_unsafe",
+      "mcp__playwright__browser_run_code_unsafe"
     ],
     "ask": [
       "Bash(git push *)",

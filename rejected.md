@@ -9,6 +9,7 @@ qué, que es donde está el criterio.
 |---|---|
 | [TokenRouter](https://www.tokenrouter.com/) | Gateway de pago: los prompts pasan por un tercero y no encontré términos ni política de privacidad |
 | [Claude-Mem](https://github.com/thedotmack/claude-mem) | Se solapa con Engram. Además necesita un worker persistente, usa un observador de pago tras 30 días e incluye telemetría (`posthog-node`) |
+| [Superpowers](https://github.com/obra/superpowers) (como plugin global) | No por seguridad, sino porque inyecta en cada sesión un segundo proceso obligatorio que compite con el mío. De él sí uso `systematic-debugging`, con atribución |
 
 ## Diferido
 
