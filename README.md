@@ -51,3 +51,8 @@ El proceso es el mismo con cualquiera de las dos; cambia quién lo ejecuta.
 
 - **Claude Code** (app de escritorio y CLI): la principal, con modelos de pago.
 - **OpenCode**: la secundaria, sólo con modelos gratuitos.
+
+## Licencia
+
+[MIT](LICENSE). Las herramientas de terceros que enlazo conservan su propia
+licencia.
