@@ -12,14 +12,13 @@
 | Implementar una tarea delegada | `implementer` | Sonnet; Opus si el riesgo es alto |
 | Revisar | `reviewer` | Sonnet; Opus en auth, dinero y migraciones |
 | Documentar | `writer` | Sonnet |
-| Especialistas | `agency-*`, si los instalaste | Sonnet |
 
 El modelo se cambia en cada llamada a un subagente. Pide Opus al lanzar
 `reviewer` en auth, dinero o migraciones, y al lanzar `implementer` si el riesgo
-es alto: sin eso se quedan en Sonnet. Pide Sonnet al lanzar un `agency-*`: el
-original hereda el modelo de la sesión.
+es alto: sin eso se quedan en Sonnet.
 
 ## Barreras
 
-Los permisos y hooks de `settings.json` son la barrera real: si bloquean algo, no
-los rodees; explica el bloqueo y pregunta.
+Los permisos y hooks de `settings.json` los aplica la herramienta, no el modelo,
+aunque ninguna capa es total. Si bloquean algo, no los rodees: explica el bloqueo y
+pregunta.
