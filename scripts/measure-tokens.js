@@ -89,7 +89,9 @@ function recordEntry(entry, data) {
       cacheRead: u.cache_read_input_tokens || 0,
     };
     const previous = data.calls.get(message.id);
-    data.lines++;
+    // Cuántas líneas ocupa la respuesta: así el factor de inflado respeta el periodo.
+    call.lines = (previous ? previous.lines : 0) + 1;
+    if (previous) previous.lines = call.lines;
     if (!previous) {
       data.calls.set(message.id, call);
     } else if (previous.output !== call.output || previous.input !== call.input
@@ -226,8 +228,8 @@ function buildReport(data, files, { since, until }) {
       files: files.length,
       unreadableFiles: data.unreadableFiles,
       badLines: data.badLines,
-      assistantLinesWithUsage: data.lines,
-      uniqueResponses: data.calls.size,
+      assistantLinesWithUsage: calls.reduce((sum, call) => sum + call.lines, 0),
+      uniqueResponses: calls.length,
       usageMismatch: data.usageMismatch,
     },
     sessions: sessions.size,
@@ -337,7 +339,6 @@ async function main() {
     calls: new Map(),
     prompts: new Map(),
     compactions: new Map(),
-    lines: 0,
     badLines: 0,
     unreadableFiles: 0,
     usageMismatch: 0,
