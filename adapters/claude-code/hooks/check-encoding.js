@@ -9,7 +9,7 @@ const path = require("path");
 const TEXT_EXT = new Set([
   ".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs", ".json", ".jsonc", ".md", ".mdx",
   ".css", ".scss", ".html", ".vue", ".svelte", ".py", ".sql", ".yml", ".yaml",
-  ".toml", ".sh", ".env.example", ".txt", ".xml", ".astro",
+  ".toml", ".sh", ".ps1", ".example", ".txt", ".xml", ".astro",
 ]);
 
 let raw = "";

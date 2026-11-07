@@ -1,5 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "env": {
+    "CLAUDE_CODE_USE_POWERSHELL_TOOL": "0"
+  },
   "permissions": {
     "allow": [
       "Read(**/.env.example)",
@@ -7,15 +10,21 @@
       "Bash(git diff *)",
       "Bash(git log *)",
       "Bash(git show *)",
-      "Bash(git branch *)",
+      "Bash(git branch --list *)",
+      "Bash(git branch --show-current)",
       "Bash(npm test *)",
-      "Bash(npm run *)",
+      "Bash(npm run test*)",
+      "Bash(npm run lint*)",
+      "Bash(npm run typecheck*)",
+      "Bash(npm run build*)",
       "Bash(bun test *)",
-      "Bash(bun run *)",
+      "Bash(bun run test*)",
+      "Bash(bun run lint*)",
+      "Bash(bun run typecheck*)",
+      "Bash(bun run build*)",
       "Bash(npx tsc *)",
       "Bash(npx vitest *)",
-      "Bash(py -m pytest *)",
-      "Bash(rg *)"
+      "Bash(py -m pytest *)"
     ],
     "deny": [
       "Read(**/.env)",
@@ -42,20 +51,20 @@
       "Bash(git reset --hard *)",
       "Bash(git clean *)",
       "Bash(git branch -D *)",
+      "Bash(git * --output*)",
       "Bash(rm -rf /*)",
       "Bash(rm -rf ~*)",
-      "mcp__plugin_playwright_playwright__browser_run_code_unsafe"
+      "mcp__plugin_playwright_playwright__browser_run_code_unsafe",
+      "mcp__playwright__browser_run_code_unsafe"
     ],
     "ask": [
       "Bash(git push *)",
-      "Bash(npm publish *)",
-      "Bash(supabase db push *)",
-      "Bash(supabase db reset *)",
-      "Bash(vercel --prod *)"
+      "Bash(gh pr create *)",
+      "Bash(gh pr merge *)",
+      "Bash(npm publish *)"
     ],
     "defaultMode": "auto"
   },
-  "model": "opus",
   "hooks": {
     "PreToolUse": [
       {
@@ -63,7 +72,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"C:/Users/BMO/.claude/hooks/block-commit-on-main.js\"",
+            "command": "node \"$HOME/.claude/hooks/block-commit-on-main.js\"",
             "if": "Bash(*git*commit*)",
             "timeout": 15
           }
@@ -76,25 +85,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"C:/Users/BMO/.claude/hooks/check-encoding.js\"",
+            "command": "node \"$HOME/.claude/hooks/check-encoding.js\"",
             "timeout": 15
           }
         ]
       }
     ]
-  },
-  "outputStyle": "Explicativo",
-  "language": "spanish",
-  "modelSettings": {
-    "claude-opus-5-5": {
-      "effortLevel": "high"
-    },
-    "claude-haiku-5-5": {
-      "effortLevel": "high"
-    }
-  },
-  "autoUpdatesChannel": "latest",
-  "theme": "dark",
-  "agentPushNotifEnabled": true,
-  "enableWorkflows": true
+  }
 }
