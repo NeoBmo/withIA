@@ -29,7 +29,7 @@ Por eso toda herramienta externa pasa la puerta antes de instalarse. Los pasos,
 los veredictos y la ficha viven en [skills/vet](skills/vet/SKILL.md).
 
 Un ejemplo: [Agency Agents](https://github.com/msitarzewski/agency-agents) trae
-299 subagentes. Instalarlos todos inflaría el contexto y empeoraría la elección
+cientos de subagentes. Instalarlos todos inflaría el contexto y empeoraría la elección
 automática de agente. Admitimos 7, fijados a un commit y forzados a Sonnet.
 
 ## Admitidas
@@ -49,8 +49,8 @@ da autor y licencia, y enlace cuando hay un repo público que enlazar.
 
 | Plugin | Autor y licencia | Para qué | Condiciones | Necesaria para el flujo | Caduca |
 |---|---|---|---|---|---|
-| Headroom | Stefan Petrovici, MIT. Sin repo que enlazar: se instala desde la app de escritorio | `/peek`: esquema de un archivo grande (log, JSON, CSV) para leer sólo lo necesario | En Windows se ejecuta con `py`. Su efecto no está medido. No confundir con Headroom de headroomlabs, diferido | No | 2027-01-26 |
-| [frontend-design](https://github.com/anthropics/claude-plugins-official) | Anthropic, licencia propia del plugin (`LICENSE.txt`) | Dirección estética, sólo markdown | La identidad visual del proyecto manda sobre la skill | No | 2027-01-26 |
+| [Headroom](https://github.com/petrovicistefan/claude-code-plugins/tree/main/headroom) | Stefan Petrovici, MIT | `/peek`: esquema de un archivo grande (log, JSON, CSV) para leer sólo lo necesario | En Windows se ejecuta con `py`. Su efecto no está medido. No confundir con Headroom de headroomlabs, diferido | No | 2027-01-26 |
+| [frontend-design](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/frontend-design) | Anthropic, Apache-2.0 | Dirección estética, sólo markdown | La identidad visual del proyecto manda sobre la skill | No | 2027-01-26 |
 | [Claude Code Setup](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/claude-code-setup) | Anthropic, Apache-2.0 | Auditoría de automatizaciones, de sólo lectura | Por proyecto; no se instala tal cual, se adapta | No | 2027-01-20 |
 | [UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | nextlevelbuilder, MIT | Skill de diseño | Sólo la skill, nunca el plugin completo; piloto por proyecto. No es prioridad | No | 2027-02-03 |
 
@@ -58,16 +58,15 @@ da autor y licencia, y enlace cuando hay un repo público que enlazar.
 
 | Skill | Fuente | Para qué | Necesaria para el flujo | Caduca |
 |---|---|---|---|---|
-| `emil-design-eng`, `animate`, `animation-performance`, `mobile-native`, `review-animations` | [emilkowalski/skills](https://github.com/emilkowalski/skills), de Emil Kowalski (MIT) | Pulido de UI y animación. Sólo 5 de 15 | No | 2027-01-20 |
+| `emil-design-eng`, `animate`, `animation-performance`, `mobile-native`, `review-animations` | [emilkowalski/skills](https://github.com/emilkowalski/skills), de Emil Kowalski (MIT) | Pulido de UI y animación. Sólo 5 de 17 (a 2026-11-06) | No | 2027-01-20 |
 | `industrial-brutalist-ui` | [taste-skill-classics](https://github.com/Leonxlnx/taste-skill-classics), de Leonxlnx (MIT) | Un estilo visual con carácter, lejos del look "SaaS limpio" genérico. Sólo uno | No | 2027-01-20 |
-| `grilling` | [mattpocock/skills](https://github.com/mattpocock/skills), de Matt Pocock (MIT), en `skills/productivity/grilling` | Que la IA cuestione un plan antes de ejecutarlo | No | Sin fecha: no consta su revisión |
 | `systematic-debugging` | [obra/superpowers](https://github.com/obra/superpowers), de Jesse Vincent (MIT) | Encontrar la causa antes de proponer un arreglo | No; [core/AGENTS.md](core/AGENTS.md) ya pide buscar la causa antes de arreglar | 2027-02-03 |
 
 ### Agentes de terceros
 
 | Agente | Fuente | Necesaria para el flujo | Caduca |
 |---|---|---|---|
-| `agency-frontend-developer`, `agency-minimal-change-engineer`, `agency-software-architect`, `agency-backend-architect`, `agency-reality-checker`, `agency-evidence-collector`, `agency-accessibility-auditor` | [msitarzewski/agency-agents](https://github.com/msitarzewski/agency-agents) (MIT), 7 de 299, fijados al commit `b37b5bb` | No | 2027-01-26 |
+| `agency-frontend-developer`, `agency-minimal-change-engineer`, `agency-software-architect`, `agency-backend-architect`, `agency-reality-checker`, `agency-evidence-collector`, `agency-accessibility-auditor` | [msitarzewski/agency-agents](https://github.com/msitarzewski/agency-agents) (MIT), sólo 7, fijados al commit `b37b5bb` | No | 2027-01-26 |
 
 Dos avisos si los enlazas:
 
@@ -99,6 +98,7 @@ un aval.
 | Plugins sincronizados de claude.ai (engineering, data, design, productivity, marketing, small-business) | Plugins | Llegan por sincronización | Pasar la puerta. Cada uno añade descripciones al contexto, justo lo que queremos controlar |
 | web-design-guidelines (Vercel) | Skill | Instalada | Pasar la puerta |
 | find-skills | Skill | Instalada en OpenCode | Pasar la puerta |
+| `grilling` ([mattpocock/skills](https://github.com/mattpocock/skills), de Matt Pocock, MIT) | Skill | Instalada, en `skills/productivity/grilling` del repo de origen | Pasar la puerta: no consta su revisión |
 
 ## Rechazadas
 
@@ -129,4 +129,4 @@ un aval.
 
 | Herramienta | Qué hace | Dudas antes de admitirla |
 |---|---|---|
-| [context-mode](https://github.com/mksglu/context-mode) | Guarda la salida de las herramientas en SQLite con búsqueda FTS5 para que no llene el contexto. Local, sin telemetría, compatible con Claude Code y OpenCode | ¿Choca con Engram (memoria) y Headroom (lectura de archivos grandes)? Sus hooks interceptan las mismas llamadas |
+| [context-mode](https://github.com/mksglu/context-mode) | Guarda la salida de las herramientas en SQLite con búsqueda FTS5 para que no llene el contexto. Local, sin telemetría, compatible con Claude Code y OpenCode | Es Elastic License 2.0 (ELv2), de Mert Koseoglu: código disponible, no abierto. ¿Choca con Engram (memoria) y Headroom (lectura de archivos grandes)? Sus hooks interceptan las mismas llamadas |

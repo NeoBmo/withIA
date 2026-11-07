@@ -16,8 +16,8 @@
 // Decisiones comprobadas en los datos reales, no supuestas:
 // - Cada bloque de una respuesta (texto, thinking, herramienta) se guarda como
 //   una entrada con el mismo message.id y el mismo usage. Sumar líneas infla el
-//   total (en la muestra original, 5881 líneas para 2161 respuestas), así que se
-//   deduplica por message.id. "usage_distinto" vigila que siga siendo seguro.
+//   total, así que se deduplica por message.id. "usage_distinto" vigila que siga
+//   siendo seguro.
 // - Una sesión puede repartirse en dos archivos, por eso se agrupa por el campo
 //   sessionId y no por archivo. Los subagentes comparten el sessionId del padre.
 // - Los errores de API se registran con modelo "<synthetic>" y usage a cero: se
@@ -36,6 +36,12 @@ function fail(message) {
   process.exit(1);
 }
 
+function isDate(value) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value || '')) return false;
+  const time = Date.parse(value);
+  return !Number.isNaN(time) && new Date(time).toISOString().startsWith(value);
+}
+
 function parseArgs(argv) {
   const options = { since: null, until: null, json: false };
   for (let i = 0; i < argv.length; i++) {
@@ -44,7 +50,7 @@ function parseArgs(argv) {
       options.json = true;
     } else if (arg === '--since' || arg === '--until') {
       const value = argv[++i];
-      if (!/^\d{4}-\d{2}-\d{2}$/.test(value || '')) fail(`${arg} necesita una fecha YYYY-MM-DD.`);
+      if (!isDate(value)) fail(`${arg} necesita una fecha YYYY-MM-DD válida.`);
       options[arg.slice(2)] = value;
     } else {
       fail(`Argumento desconocido: ${arg}`);
@@ -116,6 +122,7 @@ function recordEntry(entry, data) {
 
   if (entry.uuid && isPrompt(entry)) {
     data.prompts.set(entry.uuid, {
+      session: entry.sessionId,
       timestamp: entry.timestamp,
       // Sin turnOrigin (versiones antiguas) se asume humano.
       human: entry.turnOrigin === undefined || entry.turnOrigin === 'human',
@@ -211,7 +218,9 @@ function buildReport(data, files, { since, until }) {
     const first = firstCalls.get(call.session);
     if (!first || call.timestamp < first.timestamp) firstCalls.set(call.session, call);
   }
-  const initial = [...firstCalls.values()].filter((c) => inRange(c.timestamp)).map(promptSize);
+  const firstInRange = [...firstCalls.values()].filter((c) => inRange(c.timestamp));
+  // Una sesión automática no arranca como una de trabajo: se da también sin ellas.
+  const humanSessions = new Set([...data.prompts.values()].filter((p) => p.human).map((p) => p.session));
 
   const timestamps = calls.map((call) => call.timestamp).sort();
   const perSession = [...sessions.values()];
@@ -250,7 +259,8 @@ function buildReport(data, files, { since, until }) {
     cache: {
       hitRatioPct: percent(totals.cacheRead, cacheInput),
     },
-    initialContext: distribution(initial),
+    initialContext: distribution(firstInRange.map(promptSize)),
+    initialContextHuman: distribution(firstInRange.filter((c) => humanSessions.has(c.session)).map(promptSize)),
     models: [...models.entries()]
       .map(([model, t]) => ({
         model,
@@ -307,6 +317,7 @@ function printReport(r) {
   out.push('');
   out.push('Contexto inicial (entrada de la primera llamada de cada sesión)');
   out.push(distributionLine('tokens', r.initialContext));
+  out.push(distributionLine('con turnos humanos', r.initialContextHuman));
   out.push('');
   out.push('Por modelo');
   for (const m of r.models) {
@@ -358,4 +369,5 @@ async function main() {
   else printReport(report);
 }
 
-main();
+// Sin el error original: su mensaje incluiría rutas.
+main().catch(() => fail('No se pudieron leer las transcripciones.'));

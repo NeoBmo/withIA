@@ -48,10 +48,12 @@ sí misma.
 ## Registro
 
 Propón esta ficha a la persona. Con su aprobación, registra el veredicto: en
-`tools.md`, una fila en la tabla del bloque que corresponda, con autor, licencia y
-`Caduca`; en un catálogo de fichas, la ficha entera. Si el catálogo es público,
-cumple «Nada privado en público», de la sección «Principios» de `AGENTS.md`: sin
-rutas locales, hashes ni estadísticas de uso.
+`tools.md`, una fila en la tabla del bloque que corresponda, con los campos de su
+cabecera y `Caduca`; en un catálogo de fichas, la ficha entera. Si el catálogo es
+público, cumple «Nada privado en público», de la sección «Principios» de
+`AGENTS.md`: sin rutas locales, hashes de archivos locales ni estadísticas de uso
+que revelen datos privados. Un commit público de un tercero sí vale: es la versión
+fijada.
 
 ```markdown
 ### <Nombre>

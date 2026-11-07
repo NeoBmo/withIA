@@ -7,10 +7,12 @@ Tres avisos antes de leer:
 
 - Son 13 días de una sola persona. No generalizan.
 - Todo son **proporciones de tokens, no de coste**. No usamos precios.
-- El dato incómodo: lo que cargamos nosotros (documento global y lista de skills)
-  es sólo un 3.55% aproximado del arranque de una sesión. Recortarlo no es la
-  palanca principal. Esa cifra mide nuestra configuración privada de hoy, no este
-  paquete, que pesa algo más: ver [Contexto siempre cargado](#contexto-siempre-cargado).
+- El dato incómodo: el documento global y la lista completa de skills, plugins
+  incluidos, son aprox. un 11% del arranque de una sesión. Recortar el documento
+  (2.3%) no es la palanca principal; la lista pesa casi cuatro veces más, pero tiene
+  un tope y quitar un plugin no la encoge. El 89% restante no lo hemos identificado.
+  Mide nuestra configuración privada, no este paquete: ver
+  [Contexto siempre cargado](#contexto-siempre-cargado).
 
 ## Método
 
@@ -22,6 +24,10 @@ Añade `--json` para la salida estructurada, o `--since YYYY-MM-DD` para otro
 inicio. [El script](scripts/measure-tokens.js) no tiene dependencias, necesita
 Node.js y sólo lee transcripciones de Claude Code (`~/.claude/projects`). Imprime
 agregados: nunca texto, rutas ni nombres de proyecto.
+
+Los datos de la lista de skills y de la inyección de Superpowers no salen del
+script: se contaron aparte sobre los adjuntos `skill_listing` y
+`hook_additional_context` de las mismas transcripciones, sólo en agregado.
 
 **Periodo:** de 2026-10-24T02:59Z a 2026-11-05T23:21Z, en UTC. `--until` es
 exclusivo: corta antes de las 00:00 UTC del día indicado, así que los totales
@@ -59,7 +65,7 @@ Volumen del periodo: 26 sesiones, 211 turnos humanos, 2052 llamadas a la API.
 | Los subagentes hacen el 10.09% de las llamadas, pero sólo el 1.50% de los tokens procesados y el 6.33% de los no cacheados | 207/2052; 9001193/600909191; 1233139/19468922 | Alta, medido |
 | Opus concentra el 99.05% de los tokens procesados; Sonnet y Haiku, el 6.04% de las llamadas | 595187825/600909191; (101 + 23)/2052 | Alta, medido |
 | Las 5 compactaciones fueron automáticas y redujeron el contexto de una media de 441624 a 32750 tokens, un 92.6% | 1 − 32750/441624 = 92.58% | Alta, medido; n=5 |
-| Una sesión arranca con unos 98000 tokens de contexto | Media de entrada + creación + lectura de caché en la primera llamada de cada sesión = 98174, n=26 | Alta, medido |
+| Una sesión arranca con unos 98000 tokens de contexto, con mucha dispersión por cliente | Media de entrada + creación + lectura de caché en la primera llamada de cada sesión = 98174, n=26. Escritorio 75123-159822 (n=20), VS Code 70017-80297 (n=3), SDK 78605-84896 (n=2), terminal 50953 (n=1) | Alta como descripción. Los porcentajes de abajo usan esa media, que mezcla clientes, e incluye una sesión sin turnos humanos |
 
 Cómo se verificó:
 
@@ -76,47 +82,58 @@ Cómo se verificó:
 ## Contexto siempre cargado
 
 Medido a partir de bytes, con `tokens ≈ bytes / 3.5`, un factor que declaramos
-para español. Es una aproximación: no es la cuenta del modelo. Los tamaños son
-los de hoy, no los de cada sesión.
+para español. Es una aproximación: no es la cuenta del modelo.
 
 Nuestra configuración privada, la que corresponde a las sesiones medidas:
 
 | Pieza | Bytes | Tokens aprox. |
 |---|---|---|
 | `CLAUDE.md` global, que no se publica | 7859 | 2245 |
-| Lista de skills globales (13; sólo `discover`, `sdd` y `vet` son propias) | 4337 | 1239 |
-| **Total que cargamos nosotros** | **12196** | **3485** |
+| Lista completa de skills, plugins incluidos | 29962 | 8561 |
+| **Total identificado** | **37821** | **10806** |
 
 | Afirmación | Fórmula | Confianza |
 |---|---|---|
-| En nuestra configuración privada, `CLAUDE.md` global y lista de skills son aprox. el 3.55% del arranque; el 96.45% restante es otra cosa | (7859 + 4337) / 3.5 = 3485; 3485/98174 = 3.55% | Media: tokens aproximados por bytes/3.5 |
+| En nuestra configuración privada, `CLAUDE.md` global y lista de skills son aprox. el 11.0% del arranque; el 89.0% restante no está identificado | 37821 / 3.5 = 10806; 10806/98174 = 11.0%. Por separado, 2.3% y 8.7% | Media: tokens aproximados por bytes/3.5 |
+| La lista de skills tiene un tope cerca de 30000 bytes: más skills no la alargan, le quitan descripciones | En 22 de las 26 sesiones, su primera lista mide 30002-30092 bytes; en las otras 4, 3309-22162. Con 150 entradas, 30012 bytes y 64 descripciones; con 132, 29962 y 78 | Alta en bytes. El tope consta en la [documentación](https://code.claude.com/docs/en/skills#skill-descriptions-are-cut-short), que lo liga al 1% de la ventana de contexto |
 
-La lista puede sobrestimarse un poco: 3 de las skills que hay en disco no aparecen
-en la lista de la sesión.
+Los 29962 bytes son de las tres sesiones posteriores al cambio de abajo. De esa
+lista, `discover`, `sdd` y `vet` ocupan 1157.
 
 Lo que instala este paquete, con el mismo método y sin ninguna herramienta de
 terceros:
 
 | Pieza | Bytes | Tokens aprox. |
 |---|---|---|
-| `core/AGENTS.md` | 8777 | 2508 |
+| `core/AGENTS.md` | 8811 | 2517 |
 | `core/PROFILE.md`, plantilla sin rellenar | 1915 | 547 |
-| `CLAUDE.md` del adaptador | 888 | 254 |
+| `CLAUDE.md` del adaptador | 907 | 259 |
 | Descripciones de las 3 skills | 1223 | 349 |
 | Descripciones de los 3 agentes | 952 | 272 |
-| **Total** | **13755** | **3930** |
+| **Total** | **13808** | **3945** |
 
 | Afirmación | Fórmula | Confianza |
 |---|---|---|
-| El paquete equivale a aprox. un 4.00% de nuestro arranque medio | 13755 / 3.5 = 3930; 3930/98174 = 4.00% | Baja: compara bytes del paquete con un arranque medido con otra configuración; ninguna sesión lo ha cargado |
-| `core/AGENTS.md` creció un 33% al reescribirlo: el proceso nuevo se paga en cada sesión | 6579 bytes antes, 8777 después; 8777/6579 = 1.33 | Alta, medido en bytes |
+| El paquete equivale a aprox. un 4.02% de nuestro arranque medio | 13808 / 3.5 = 3945; 3945/98174 = 4.02% | Baja: compara bytes del paquete con un arranque medido con otra configuración; ninguna sesión lo ha cargado |
+| `core/AGENTS.md` creció un 34% al reescribirlo: el proceso nuevo se paga en cada sesión | 6579 bytes antes, 8811 después; 8811/6579 = 1.34 | Alta, medido en bytes |
 
-## Superpowers: calculado, no observado
+## Superpowers: desactivado, ahorro sin observar
 
 Desactivamos este plugin el 2026-11-06 a las 20:34 UTC, por el motivo que
-explica [tools.md](tools.md). **Lo que sigue está calculado, no observado:** no
-hay ninguna sesión iniciada después del cambio, y falta comprobar en una sesión
-nueva que la desactivación surte efecto. Para observarlo:
+explica [tools.md](tools.md). Aparece en los adjuntos de 15 de las 26 sesiones del
+periodo.
+
+Lo observado después del cambio:
+
+- **Sesiones nuevas: ya no carga.** Hay tres, automáticas y sin turnos humanos. Su
+  lista tiene 132 entradas, ninguna de Superpowers, y no hay inyección.
+- **Subagentes de una sesión anterior: siguen viéndolo.** Los lanzados después
+  desde una sesión abierta antes del cambio reciben 150 entradas, 15 de Superpowers.
+  Heredan el estado de esa sesión, así que no contradicen lo anterior.
+
+Falta una sesión de trabajo real para ver el arranque. Para observarlo, usa sólo
+la línea `con turnos humanos` del contexto inicial: los totales incluyen sesiones
+automáticas y sesiones abiertas antes de la fecha.
 
 ```bash
 node scripts/measure-tokens.js --since 2026-11-07
@@ -124,13 +141,12 @@ node scripts/measure-tokens.js --since 2026-11-07
 
 | Afirmación | Fórmula | Confianza |
 |---|---|---|
-| Desactivarlo quita aprox. un 1.8% del contexto inicial medio (rango 1.6-1.9%) | (3616 + 2588) / 3.5 = 1773; 1773/98174 = 1.81%. Sensibilidad: 6204/4 = 1551, un 1.58%, porque el texto está en inglés; con los bytes medidos en el plugin, 1.67-1.89% | Media: calculado, sin muestra posterior |
-| Ocupaba aprox. un tercio del contexto siempre cargado medido | 1773 / (3485 + 1773) = 33.7% | Media: sólo sobre esos tres elementos, no sobre todo el contexto |
-| Como cota superior, esos tokens fueron un 0.55% del contexto de entrada medio por llamada principal | (3696 + 16410618 + 573672215)/1845 = 319830; 1773/319830 = 0.55% | Media: cota superior; no consta activo en todas las sesiones y casi todo sería lectura de caché |
+| Desactivarlo quita aprox. un 1.0% del contexto inicial medio (rango 0.87-0.99%) | Inyección observada: 3417 bytes en las 22 veces que aparece. 3417 / 3.5 = 976; 976/98174 = 0.99%. Sensibilidad: 3417/4 = 854, un 0.87%, porque el texto está en inglés | Media: calculado con bytes observados, sin muestra humana posterior |
+| Sus descripciones no suman ahorro: la lista sigue en el tope y otras skills ocupan el hueco | Ver [Contexto siempre cargado](#contexto-siempre-cargado): de 30012 a 29962 bytes | Alta en bytes; n=3 posteriores |
+| Como cota superior, esa inyección fue un 0.31% del contexto de entrada medio por llamada principal | (3696 + 16410618 + 573672215)/1845 = 319830; 976/319830 = 0.31% | Media: cota superior; sólo 14 sesiones tienen inyección y casi todo sería lectura de caché |
 
-Los 3616 y 2588 bytes son los indicados de partida (inyección al inicio y
-descripciones). Medidos en el plugin salen 3424 y entre 2308 y 2876, por eso damos
-un rango.
+Nuestra primera estimación era un 1.8% porque sumaba las descripciones, y el tope
+de la lista la invalida.
 
 ## Qué no podemos afirmar
 
@@ -140,20 +156,17 @@ inventado, y lo mismo pasa con "sin caché costaría X".
 
 Tampoco podemos medir:
 
-- **Ahorro observado por desactivar Superpowers:** no hay sesiones posteriores
-  al cambio. Hay que volver a medir con `--since 2026-11-07`.
-- **Si Superpowers estaba activo en cada una de las 26 sesiones:** las fechas de
-  los archivos del plugin no prueban su estado sesión a sesión. Por eso comparar
-  periodos no sirve como "antes y después", y además hubo otros cambios.
+- **Ahorro observado por desactivar Superpowers:** no hay sesiones de trabajo
+  posteriores al cambio, y las tres automáticas no son comparables.
+- **Un antes y después de Superpowers:** se sabe en qué sesiones estaba, pero entre
+  ellas hubo otros cambios y clientes distintos.
 - **Su efecto en subagentes:** el hook de inicio y la lista de skills en
   subagentes no se distinguen en los datos de usage.
-- **De qué se compone el 96.45% restante del arranque** (prompt de sistema,
-  esquemas de herramientas, MCP, skills de plugins, `CLAUDE.md` de proyecto):
-  usage sólo da el total.
-- **El contexto exacto de cada sesión:** `CLAUDE.md` y skills se midieron como
-  están hoy, no como estaban entonces.
+- **De qué se compone el 89.0% restante del arranque** (prompt de sistema,
+  esquemas de herramientas, MCP, `CLAUDE.md` de proyecto): usage sólo da el total.
+- **El contexto exacto de cada sesión:** `CLAUDE.md` se midió como está hoy, no
+  como estaba entonces.
 - **El arranque real con este paquete:** ninguna sesión medida lo cargó.
-- **Los bytes exactos que recibe el modelo:** 3616 y 2588 no se reproducen exactos.
 - **Llamadas no registradas en transcripciones:** `cost-state` muestra más salida
   que la transcripción en algunas sesiones, lo que apunta a tareas en segundo plano
   o peticiones no guardadas. Causa sin confirmar; los totales pueden quedar algo

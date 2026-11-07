@@ -2,8 +2,8 @@
 
 Cómo trabajamos Luis ([NeoBmo](https://github.com/NeoBmo)) y Claude para programar:
 el proceso, las reglas y las herramientas, con el porqué de cada decisión, para
-copiarlo, discutirlo o descartarlo. Es nuestro proceso escrito como paquete; ese
-paquete aún no lo hemos ejecutado entero: ver [Dónde funciona](#dónde-funciona).
+copiarlo, discutirlo o descartarlo. Es nuestro proceso escrito como paquete; su
+estado de prueba está en [Dónde funciona](#dónde-funciona).
 
 - **Evidencia antes que confianza.** Nada se da por terminado sin tests, navegador
   o una revisión independiente. Lo no probado se marca como no probado.
@@ -14,7 +14,7 @@ paquete aún no lo hemos ejecutado entero: ver [Dónde funciona](#dónde-funcion
 
 > **In English:** how we (Luis, a self-taught frontend developer, and Claude) work
 > with AI coding agents: evidence first, autonomy with hard guardrails, one global
-> setup. Only Claude Code has been run, and only partly. The content is in Spanish. Start with
+> setup. The content is in Spanish. Start with
 > [core/AGENTS.md](core/AGENTS.md) and [adapters/README.md](adapters/README.md).
 
 ## El bucle
@@ -62,24 +62,24 @@ este repo, resumida. La sesión evaluó otra herramienta más; aquí seguimos é
    cada sesión un segundo proceso obligatorio que compite con el nuestro.
 5. **Cierre.** Respuesta corta: veredicto, qué cambiaría y qué no quedó verificado
    (sus skills se revisaron por patrones, no enteras). Con el sí, se desactivó y
-   corregimos la atribución. Falta comprobar en una sesión nueva que surte efecto.
+   corregimos la atribución. Las sesiones nuevas ya no lo listan; su efecto en una
+   sesión de trabajo sigue sin observarse ([tokens.md](tokens.md)).
 
 ## Dónde funciona
 
 | Agente | Estado |
 |---|---|
-| Claude Code | Parcial: el paquete aún no se ha ejecutado en una sesión real. Ver [Qué está probado](adapters/README.md#qué-está-probado) |
-| OpenCode, Codex CLI, Antigravity, Cursor, Copilot CLI, Gemini CLI | No probado: sale de su documentación |
+| Claude Code | Ver [Qué está probado](adapters/README.md#qué-está-probado) |
+| OpenCode, Codex CLI, Antigravity, Cursor, Copilot CLI, Gemini CLI | Ver [Compatibilidad](adapters/other-agents.md#compatibilidad) |
 | ChatGPT web o Work | Soporte no confirmado |
 
 ## Qué no prometemos
 
-- **Ningún porcentaje de ahorro global.** No hay grupo de control, y lo que
-  cargamos nosotros no es la palanca principal: ver [tokens.md](tokens.md).
+- **Ningún porcentaje de ahorro global.** No hay grupo de control: ver
+  [tokens.md](tokens.md).
 - **Mejor calidad o más velocidad.** No medido, y los datos son de una persona.
-- **Barreras absolutas.** `reviewer` conserva Bash: no editar es una instrucción,
-  no un bloqueo. Más límites en [Barreras](adapters/README.md#barreras).
-- **Un tiempo de instalación.** Aún no lo hemos cronometrado.
+- **Barreras absolutas.** Sus límites están en
+  [Barreras](adapters/README.md#barreras).
 
 ## Licencia
 

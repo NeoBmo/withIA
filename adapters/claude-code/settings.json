@@ -1,5 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "env": {
+    "CLAUDE_CODE_USE_POWERSHELL_TOOL": "0"
+  },
   "permissions": {
     "allow": [
       "Read(**/.env.example)",
@@ -21,8 +24,7 @@
       "Bash(bun run build*)",
       "Bash(npx tsc *)",
       "Bash(npx vitest *)",
-      "Bash(py -m pytest *)",
-      "Bash(rg *)"
+      "Bash(py -m pytest *)"
     ],
     "deny": [
       "Read(**/.env)",
@@ -49,6 +51,7 @@
       "Bash(git reset --hard *)",
       "Bash(git clean *)",
       "Bash(git branch -D *)",
+      "Bash(git * --output*)",
       "Bash(rm -rf /*)",
       "Bash(rm -rf ~*)",
       "mcp__plugin_playwright_playwright__browser_run_code_unsafe",

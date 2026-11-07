@@ -1,4 +1,4 @@
-> Si eres subagente, sigue tu brief: no coordinas ni hablas con la persona; de este documento sólo te aplican sus límites.
+> Si eres subagente, sigue tu brief: no coordinas ni hablas con la persona; de este documento te aplican sus límites y las secciones que cite tu definición.
 
 # Doctrina común de trabajo con agentes
 

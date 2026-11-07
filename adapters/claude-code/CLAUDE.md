@@ -12,7 +12,7 @@
 | Implementar una tarea delegada | `implementer` | Sonnet; Opus si el riesgo es alto |
 | Revisar | `reviewer` | Sonnet; Opus en auth, dinero y migraciones |
 | Documentar | `writer` | Sonnet |
-| Especialistas | `agency-*` | Sonnet |
+| Especialistas | `agency-*`, si los instalaste | Sonnet |
 
 El modelo se cambia en cada llamada a un subagente. Pide Opus al lanzar
 `reviewer` en auth, dinero o migraciones, y al lanzar `implementer` si el riesgo
