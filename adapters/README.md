@@ -72,7 +72,7 @@ global de usuario, sólo de proyecto.
 No es opcional, porque `cp -n` pudo saltarse algo. Abre una sesión nueva:
 
 1. Aparecen los agentes `implementer`, `reviewer` y `writer`.
-2. Aparecen las skills `discover`, `sdd` y `vet`, y su contenido es el del repo: una
+2. Aparecen las skills `discover`, `sdd`, `vet` y `web-quality-gate`, y su contenido es el del repo: una
    skill antigua con el mismo nombre también aparece. Compruébalo con el bloque de
    abajo, que no debe imprimir nada.
 3. `/memory` lista el documento y sus imports.
@@ -84,7 +84,7 @@ No es opcional, porque `cp -n` pudo saltarse algo. Abre una sesión nueva:
 Para el punto 2:
 
 ```bash
-for s in discover sdd vet; do diff -r "skills/$s" ~/.claude/skills/"$s"; done
+for s in discover sdd vet web-quality-gate; do diff -r "skills/$s" ~/.claude/skills/"$s"; done
 ```
 
 Para el punto 5, crea ese repo. El remoto es ficticio y nunca se contacta:
@@ -154,7 +154,7 @@ nuestra sigue siendo un único documento privado, sin partir.
 |---|---|
 | `claude -p` (2.1.310) con el paquete a nivel de proyecto, en una carpeta temporal: cargan `CLAUDE.md`, `@AGENTS.md`, `@PROFILE.md` y los tres agentes | Lo mismo instalado en `~/.claude` |
 | `$HOME` se resuelve en los hooks, con la versión anterior del repo | Las skills en sesión: ese `claude -p` mostró las de `~/.claude/skills`, que tienen los mismos nombres, así que no las prueba |
-| Los `cp` de [Instalar](#instalar) dejan los 12 archivos en su sitio con un `HOME` vacío, desde una copia local: archivos, no una sesión | `git clone` real |
+| Los `cp` de [Instalar](#instalar) dejan los 13 archivos en su sitio con un `HOME` vacío, desde una copia local: archivos, no una sesión | `git clone` real |
 | `block-commit-on-main`, lanzado a mano contra repos desechables: 57 casos | El mismo hook dentro de una sesión y las cinco comprobaciones de [Comprobar](#comprobar) |
 | | Las reglas de `settings.json` dentro de una sesión, `CLAUDE_CODE_USE_POWERSHELL_TOOL` incluida |
 | | macOS y Linux |

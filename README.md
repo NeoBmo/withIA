@@ -40,7 +40,7 @@ cuarenta archivos, no. Las reglas exactas están en [core/AGENTS.md](core/AGENTS
 | `implementer` | Ejecuta una tarea acotada y devuelve evidencia | [agents/implementer.md](agents/implementer.md) |
 | `reviewer` | Juzga el cambio con contexto limpio | [agents/reviewer.md](agents/reviewer.md) |
 | `writer` | Documenta lo que existe, contrastado con el código | [agents/writer.md](agents/writer.md) |
-| Skills | Preparar un proyecto, planificar y admitir herramientas | [discover](skills/discover/SKILL.md), [sdd](skills/sdd/SKILL.md), [vet](skills/vet/SKILL.md) |
+| Skills | Preparar un proyecto, planificar, admitir herramientas y revisar una web antes de publicarla | [discover](skills/discover/SKILL.md), [sdd](skills/sdd/SKILL.md), [vet](skills/vet/SKILL.md), [web-quality-gate](skills/web-quality-gate/SKILL.md) |
 | Terceros | Opcionales, con autor y licencia, enlazados si tienen repo público, nunca copiados | [tools.md](tools.md) |
 | La persona | Decide lo crucial y define cómo quiere trabajar | [Autonomía](core/AGENTS.md#autonomía), [core/PROFILE.md](core/PROFILE.md) |
 | Configuración | Instalación, permisos y hooks | [adapters/README.md](adapters/README.md) |

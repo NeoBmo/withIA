@@ -113,7 +113,8 @@ tooling que el proyecto no tenga para "cumplir" el proceso.
 ## Verificación visual
 
 La UI se mira con ojos, en un navegador real: escritorio, móvil (≤768 px) y
-`prefers-reduced-motion`, con la consola sin errores.
+`prefers-reduced-motion`, con la consola sin errores. Una web que va a publicarse
+pasa además la skill `web-quality-gate` antes de cerrar.
 
 ## Roles y modelos
 

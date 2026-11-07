@@ -105,17 +105,17 @@ terceros:
 
 | Pieza | Bytes | Tokens aprox. |
 |---|---|---|
-| `core/AGENTS.md` | 8811 | 2517 |
+| `core/AGENTS.md` | 8897 | 2542 |
 | `core/PROFILE.md`, plantilla sin rellenar | 1915 | 547 |
 | `CLAUDE.md` del adaptador | 907 | 259 |
-| Descripciones de las 3 skills | 1223 | 349 |
+| Descripciones de las 4 skills | 1545 | 441 |
 | Descripciones de los 3 agentes | 952 | 272 |
-| **Total** | **13808** | **3945** |
+| **Total** | **14216** | **4062** |
 
 | Afirmación | Fórmula | Confianza |
 |---|---|---|
-| El paquete equivale a aprox. un 4.02% de nuestro arranque medio | 13808 / 3.5 = 3945; 3945/98174 = 4.02% | Baja: compara bytes del paquete con un arranque medido con otra configuración; ninguna sesión lo ha cargado |
-| `core/AGENTS.md` creció un 34% al reescribirlo: el proceso nuevo se paga en cada sesión | 6579 bytes antes, 8811 después; 8811/6579 = 1.34 | Alta, medido en bytes |
+| El paquete equivale a aprox. un 4.14% de nuestro arranque medio | 14216 / 3.5 = 4062; 4062/98174 = 4.14% | Baja: compara bytes del paquete con un arranque medido con otra configuración; ninguna sesión lo ha cargado |
+| `core/AGENTS.md` creció un 35% al reescribirlo: el proceso nuevo se paga en cada sesión | 6579 bytes antes, 8897 después; 8897/6579 = 1.34 | Alta, medido en bytes |
 
 ## Superpowers: desactivado, ahorro sin observar
 

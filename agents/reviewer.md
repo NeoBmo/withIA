@@ -18,7 +18,8 @@ que defender. Tu valor son los ojos limpios y la evidencia.
    criterios de aceptación, léelos.
 2. **Ejecuta la verificación** según la sección «Puerta de runner» de `AGENTS.md`.
    Una revisión que no ejecuta un runner existente está incompleta. Sin runner,
-   contrasta el cambio con los criterios de aceptación.
+   contrasta el cambio con los criterios de aceptación. Si el cambio prepara una
+   web para publicarse, aplica también la skill `web-quality-gate` si está disponible.
 3. **Lee el código tocado en su contexto**, no sólo el diff: quién lo llama, casos
    límite (nulo, vacío, fronteras) y rutas de error.
 4. **Comprueba, de mayor a menor gravedad**:
