@@ -6,9 +6,10 @@ criterio.
 
 **Ninguna herramienta de esta página es necesaria para el flujo.** El proceso
 funciona con el agente, Git y los tests del proyecto. Lo demás es opcional y
-nunca se instala por defecto.
+nunca se instala por defecto. El inventario completo, con usos y valor de cada
+pieza, está en [skills.md](skills.md).
 
-Última revisión de la página: 2026-11-06. Los veredictos caducan a los 90 días,
+Última revisión de la página: 2026-11-07. Los veredictos caducan a los 90 días,
 porque las herramientas cambian rápido y un veredicto viejo puede ser falso. Cada
 fila lleva su fecha en la columna `Caduca`; una fila sin fecha no tiene veredicto
 vigente.
@@ -30,7 +31,8 @@ los veredictos y la ficha viven en [skills/vet](skills/vet/SKILL.md).
 
 Un ejemplo: [Agency Agents](https://github.com/msitarzewski/agency-agents) trae
 cientos de subagentes. Instalarlos todos inflaría el contexto y empeoraría la elección
-automática de agente. Admitimos 7, fijados a un commit y forzados a Sonnet.
+automática de agente. Admitimos 7, fijados a un commit y forzados a Sonnet, y los
+retiramos el 2026-11-07 porque en 3 semanas no se usó ninguno.
 
 ## Admitidas
 
@@ -62,19 +64,6 @@ da autor y licencia, y enlace cuando hay un repo público que enlazar.
 | `industrial-brutalist-ui` | [taste-skill-classics](https://github.com/Leonxlnx/taste-skill-classics), de Leonxlnx (MIT) | Un estilo visual con carácter, lejos del look "SaaS limpio" genérico. Sólo uno | No | 2027-01-20 |
 | `systematic-debugging` | [obra/superpowers](https://github.com/obra/superpowers), de Jesse Vincent (MIT) | Encontrar la causa antes de proponer un arreglo | No; [core/AGENTS.md](core/AGENTS.md) ya pide buscar la causa antes de arreglar | 2027-02-03 |
 
-### Agentes de terceros
-
-| Agente | Fuente | Necesaria para el flujo | Caduca |
-|---|---|---|---|
-| `agency-frontend-developer`, `agency-minimal-change-engineer`, `agency-software-architect`, `agency-backend-architect`, `agency-reality-checker`, `agency-evidence-collector`, `agency-accessibility-auditor` | [msitarzewski/agency-agents](https://github.com/msitarzewski/agency-agents) (MIT), sólo 7, fijados al commit `b37b5bb` | No | 2027-01-26 |
-
-Dos avisos si los enlazas:
-
-- El `model: sonnet` es un añadido nuestro. El original hereda el modelo de la
-  sesión, que puede ser el más caro.
-- `agency-reality-checker` y `agency-evidence-collector` citan
-  `./qa-playwright-capture.sh`, que no existe en el repo de origen.
-
 ### CLI
 
 | Herramienta | Autor y licencia | Condiciones | Necesaria para el flujo | Caduca |
@@ -94,11 +83,44 @@ un aval.
 | Chrome DevTools MCP | MCP | Configurado en OpenCode | Pasar la puerta; se solapa con Playwright |
 | web-validator | MCP | Configurado en OpenCode, para SEO y schema | Revisar su procedencia |
 | Notion | MCP | Parte de nuestra configuración privada, no del flujo publicable | Pasar la puerta si alguien quiere adoptarlo |
-| ralph-loop | Plugin | Disponible por sincronización | Pasar la puerta |
-| Plugins sincronizados de claude.ai (engineering, data, design, productivity, marketing, small-business) | Plugins | Llegan por sincronización | Pasar la puerta. Cada uno añade descripciones al contexto, justo lo que queremos controlar |
+| ralph-loop | Plugin | Activo por sincronización, sin usos | Pasar la puerta o apagarlo: [skills.md](skills.md) propone retirarlo |
+| engineering | Plugin | Activo por sincronización, sin usos | Pasar la puerta. Cada plugin añade descripciones al contexto, justo lo que queremos controlar |
+| data, design, productivity, marketing, small-business, cowork-plugin-management | Plugins | Sincronizados y desactivados el 2026-11-07 | Pasar la puerta antes de reactivarlos |
 | web-design-guidelines (Vercel) | Skill | Instalada | Pasar la puerta |
 | find-skills | Skill | Instalada en OpenCode | Pasar la puerta |
 | `grilling` ([mattpocock/skills](https://github.com/mattpocock/skills), de Matt Pocock, MIT) | Skill | Instalada, en `skills/productivity/grilling` del repo de origen | Pasar la puerta: no consta su revisión |
+
+## Fallos reales
+
+Antes de crear skills miramos qué falla de verdad. El 2026-11-07 revisamos commits de
+arreglo y 3 semanas de conversaciones, y salieron **88 casos**: 60 de git, 18 de
+correcciones humanas y 10 errores admitidos por el modelo. Las skills tocan unos 14.
+Casi todo lo demás lo cubren `reviewer`, reglas, hooks y CI, o no lo arregla una skill.
+
+| Tema | Casos | Qué hicimos |
+|---|---|---|
+| Datos y validación de servidor | 13 (9 de validación, 4 de concurrencia) | [hardening-server-writes](skills/hardening-server-writes/SKILL.md) |
+| Reglas de negocio | 9 | Nada aquí: van en los tests de cada proyecto |
+| Integración de ramas paralelas | 7 | No es una skill: pide hook o CI |
+| Estado de UI y formularios | 6 | [rules/frontend.md](rules/frontend.md) |
+| Accesibilidad | 6 (3 de contraste, 3 de semántica y foco) | [web-quality-gate](skills/web-quality-gate/SKILL.md) y la misma regla |
+| CI y e2e | 6 | Documentación de cada proyecto |
+| Afirmaciones del modelo sin comprobar | 5 | Sin skill: la tabla de evidencia de `implementer` |
+| Responsive y móvil | 4 | La misma puerta, [mobile-native](https://github.com/emilkowalski/skills) y la receta [verify](templates/verify/SKILL.md) |
+
+Los temas de la tabla son los principales y no suman 88. Otros, como comandos
+fallidos en Windows o contexto perdido entre sesiones, quedan fuera.
+
+Hay que leerlo con cuidado:
+
+- **Sesgo fuerte.** 338 de los 486 commits, y la mayoría de los arreglos, vienen de un
+  solo repo de backend. Los 13 casos de servidor salen de ahí. Los repos de frontend
+  arreglan sin etiquetar, así que el front está subcontado.
+- **Clasificación ligera.** Se hizo una sola vez, a mano y leyendo el asunto de cada
+  commit, sin abrir el diff. Un caso es un asunto, no una causa raíz comprobada.
+- **Es una pista, no una prueba.** Los conteos justifican probar una pieza, no
+  crearla. Por eso [hardening-server-writes](skills.md#prueba-de-hardening-server-writes)
+  pasó una prueba con y sin ella, que no ganó en su criterio principal.
 
 ## Rechazadas
 
@@ -106,6 +128,7 @@ un aval.
 |---|---|---|
 | [TokenRouter](https://www.tokenrouter.com/) | Gateway de pago: los prompts pasan por un tercero y no encontramos términos ni política de privacidad | 2027-01-20 |
 | [Claude-Mem](https://github.com/thedotmack/claude-mem) | Se solapa con Engram. Además necesita un worker persistente, usa un observador de pago tras 30 días e incluye telemetría (`posthog-node`) | 2027-01-20 |
+| [Agency Agents](https://github.com/msitarzewski/agency-agents), los 7 que admitimos | Retirados el 2026-11-07: 0 usos en 3 semanas. Si los enlazas: el `model: sonnet` era un añadido nuestro, y `agency-reality-checker` y `agency-evidence-collector` citan un script que no existe en su repo | 2027-02-05 |
 | [Superpowers](https://github.com/obra/superpowers) (como plugin global) | No por seguridad, sino porque inyecta en cada sesión un segundo proceso obligatorio que compite con el nuestro. Su coste está en [tokens.md](tokens.md). De él enlazamos `systematic-debugging`, con atribución | 2027-02-03 |
 
 ## Diferidas

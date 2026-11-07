@@ -8,10 +8,11 @@ Tres avisos antes de leer:
 - Son 13 días de una sola persona. No generalizan.
 - Todo son **proporciones de tokens, no de coste**. No usamos precios.
 - El dato incómodo: el documento global y la lista completa de skills, plugins
-  incluidos, son aprox. un 11% del arranque de una sesión. Recortar el documento
-  (2.3%) no es la palanca principal; la lista pesa casi cuatro veces más, pero tiene
-  un tope y quitar un plugin no la encoge. El 89% restante no lo hemos identificado.
-  Mide nuestra configuración privada, no este paquete: ver
+  incluidos, eran aprox. un 11% del arranque de una sesión. Recortar el documento
+  (2.3%) no es la palanca principal; la lista pesaba casi cuatro veces más, y en el
+  tope quitar un plugin no la encogía. Hubo que bajar de ese tope: ver
+  [Poda de la lista de skills](#poda-de-la-lista-de-skills). El 89% restante no lo
+  hemos identificado. Mide nuestra configuración privada, no este paquete: ver
   [Contexto siempre cargado](#contexto-siempre-cargado).
 
 ## Método
@@ -84,7 +85,8 @@ Cómo se verificó:
 Medido a partir de bytes, con `tokens ≈ bytes / 3.5`, un factor que declaramos
 para español. Es una aproximación: no es la cuenta del modelo.
 
-Nuestra configuración privada, la que corresponde a las sesiones medidas:
+Nuestra configuración privada, la que corresponde a las sesiones medidas, antes de
+la poda:
 
 | Pieza | Bytes | Tokens aprox. |
 |---|---|---|
@@ -97,7 +99,7 @@ Nuestra configuración privada, la que corresponde a las sesiones medidas:
 | En nuestra configuración privada, `CLAUDE.md` global y lista de skills son aprox. el 11.0% del arranque; el 89.0% restante no está identificado | 37821 / 3.5 = 10806; 10806/98174 = 11.0%. Por separado, 2.3% y 8.7% | Media: tokens aproximados por bytes/3.5 |
 | La lista de skills tiene un tope cerca de 30000 bytes: más skills no la alargan, le quitan descripciones | En 22 de las 26 sesiones, su primera lista mide 30002-30092 bytes; en las otras 4, 3309-22162. Con 150 entradas, 30012 bytes y 64 descripciones; con 132, 29962 y 78 | Alta en bytes. El tope consta en la [documentación](https://code.claude.com/docs/en/skills#skill-descriptions-are-cut-short), que lo liga al 1% de la ventana de contexto |
 
-Los 29962 bytes son de las tres sesiones posteriores al cambio de abajo. De esa
+Los 29962 bytes son de las tres sesiones posteriores al cambio de Superpowers. De esa
 lista, `discover`, `sdd` y `vet` ocupan 1157.
 
 Lo que instala este paquete, con el mismo método y sin ninguna herramienta de
@@ -116,6 +118,34 @@ terceros:
 |---|---|---|
 | El paquete equivale a aprox. un 4.14% de nuestro arranque medio | 14216 / 3.5 = 4062; 4062/98174 = 4.14% | Baja: compara bytes del paquete con un arranque medido con otra configuración; ninguna sesión lo ha cargado |
 | `core/AGENTS.md` creció un 35% al reescribirlo: el proceso nuevo se paga en cada sesión | 6579 bytes antes, 8897 después; 8897/6579 = 1.34 | Alta, medido en bytes |
+
+Esta tabla se midió el 2026-11-06 y no se ha repetido. Desde entonces el paquete suma
+`hardening-server-writes` (356 bytes de descripción) y `rules/frontend.md` (2050
+bytes, que sólo se cargan al tocar archivos de interfaz).
+
+## Poda de la lista de skills
+
+El 2026-11-07 retiramos lo que no usábamos, para bajar del tope de la lista. Los
+plugins desactivados son small-business, data, marketing, productivity, design,
+cowork-plugin-management y la copia sincronizada de playwright. También salieron
+`grill-me` y los 7 agentes `agency-*`, que no ocupaban esta lista. El inventario con
+usos está en [skills.md](skills.md).
+
+| Medida | Antes | Después | Con `hardening-server-writes` |
+|---|---|---|---|
+| Entradas | 132 | 58 | 59 |
+| Bytes | 29962 | 25784 | 26224 |
+| Entradas sin descripción | 54 | 0 | 0 |
+
+| Afirmación | Fórmula | Confianza |
+|---|---|---|
+| Todas las entradas llevan descripción: el modelo ve para qué sirve cada una, no sólo su nombre | De 54 a 0 sin descripción | Alta, medido en la lista. Que elija mejor no está medido |
+| La lista adelgazó aprox. un 1.2% del arranque medio | (29962 − 25784) / 3.5 = 1194; 1194/98174 = 1.2% | Media: tokens aproximados por bytes/3.5, sobre un arranque medido antes de la poda |
+| Queda margen bajo el tope: unos 3800 bytes | 30000 − 26224 = 3776 | Media: el tope exacto no consta en bytes |
+
+Los datos de "después" salen de sesiones automáticas, no de una sesión de trabajo. De
+los 440 bytes que separan 25784 de 26224, la línea de la skill nueva ocupa 386; los
+otros 54 son cambios que no desglosamos.
 
 ## Superpowers: desactivado, ahorro sin observar
 
