@@ -6,8 +6,9 @@ la de V1 y se contradicen: no apliques sintaxis de V1 en permisos, MCP ni plugin
 
 ## Modelos
 
-- Usa sólo modelos de coste 0 y estado `active`, verificados con la tool
-  `models` antes de usarlos. Nunca modelos de pago, ni siquiera como ejemplo.
+- Usa sólo modelos de coste 0 y estado `active`, verificados con
+  `node $HOME/.config/opencode/scripts/check-free-models.mjs` antes de usarlos.
+  Nunca modelos de pago, ni siquiera como ejemplo.
 - Si no hay un modelo gratuito adecuado, para y pregunta. Nunca caigas a uno de
   pago.
 - Coste 0 no implica capacidad de texto: excluye routers meta, embeddings,

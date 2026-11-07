@@ -1,0 +1,12 @@
+// Pega estas reglas al FINAL de "permissions" en ~/.config/opencode/opencode.jsonc.
+// Gana la última coincidencia: si van antes de un allow general, no hacen nada.
+[
+  { "action": "shell", "resource": "git push *", "effect": "ask" },
+  { "action": "shell", "resource": "gh pr create *", "effect": "ask" },
+  { "action": "shell", "resource": "gh pr merge *", "effect": "ask" },
+  { "action": "shell", "resource": "npm publish *", "effect": "ask" },
+  { "action": "shell", "resource": "vercel *--prod*", "effect": "ask" },
+  { "action": "shell", "resource": "npx vercel *--prod*", "effect": "ask" },
+  { "action": "shell", "resource": "supabase db push *", "effect": "ask" },
+  { "action": "shell", "resource": "npx supabase db push *", "effect": "ask" }
+]
