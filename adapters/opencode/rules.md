@@ -1,6 +1,9 @@
 
 # Adaptador para OpenCode: sólo modelos gratuitos
 
+Versión fijada: OpenCode V2 (referencia: v2.1.4). Su documentación convive con
+la de V1 y se contradicen: no apliques sintaxis de V1 en permisos, MCP ni plugins.
+
 ## Modelos
 
 - Usa sólo modelos de coste 0 y estado `active`, verificados con la tool
@@ -14,8 +17,8 @@
 
 - El revisor es de una **familia de modelos distinta** a la del implementador.
   Familia es el prefijo del ID del modelo, no el proveedor.
-- Dos modelos gratuitos de la misma familia tienden a compartir puntos ciegos, y
-  aquí no hay un modelo superior que los corrija.
+- Aquí no es opcional: no hay un modelo superior que corrija los puntos ciegos
+  compartidos.
 
 ## Respaldo por cuota
 
@@ -26,8 +29,7 @@ si el resultado es insuficiente.
 
 ## Persistencia
 
-Los modelos gratuitos cambian y se agotan, así que el estado vive en disco:
-`MEMORY.md` (máximo 50 líneas) lo mantiene sólo el coordinador al cerrar cada
-tarea, con estado, evidencia del runner, decisiones y sustituciones de modelo.
-Cualquier modelo debe poder retomar la tarea leyendo el plan de tareas de §7 del
-núcleo (`tasks.md` dentro de `specs/NNN-nombre/`).
+Aplica la sección "Memoria" del núcleo con `MEMORY.md` en disco. Como los modelos
+gratuitos cambian y se agotan, registra también las sustituciones de modelo.
+Cualquier modelo debe poder retomar la tarea leyendo el `tasks.md` descrito en la
+skill `sdd`.

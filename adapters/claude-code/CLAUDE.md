@@ -1,13 +1,7 @@
 @AGENTS.md
+@PROFILE.md
 
 # Adaptador para Claude Code
-
-## Quién soy
-
-<!-- Cambia esto: rol, experiencia, idioma, sistema operativo, terminal y sus
-     particularidades (por ejemplo, en Windows `py` en vez de `python`). -->
-Desarrollador. Respóndeme en español y explica el porqué de las decisiones
-importantes, con un ejemplo concreto.
 
 ## Modelos
 
@@ -15,26 +9,17 @@ importantes, con un ejemplo concreto.
 |---|---|---|
 | Coordinador | sesión principal | Opus, esfuerzo alto |
 | Explorar / borrador de plan | agentes nativos `Explore`, `Plan` | los suyos |
-| Implementar una tarea delegada | `implementer` | Sonnet |
+| Implementar una tarea delegada | `implementer` | Sonnet; Opus si el riesgo es alto |
 | Revisar | `reviewer` | Sonnet; Opus en auth, dinero y migraciones |
 | Documentar | `writer` | Sonnet |
 | Especialistas | `agency-*` | Sonnet |
 
-El modelo se puede cambiar en cada llamada a un subagente.
-
-## Skills del flujo
-
-| Momento | Skill |
-|---|---|
-| Repo nuevo sin `CLAUDE.md` | `discover` |
-| Planificar cambios grandes | `sdd` |
-| Algo falla al ajustar | `systematic-debugging` |
-| Evaluar una herramienta externa | `vet` |
-
-Son skills propias o externas: instala las que uses. Ver
-[tools/](https://github.com/NeoBmo/withIA/tree/main/tools).
+El modelo se cambia en cada llamada a un subagente. Pide Opus al lanzar
+`reviewer` en auth, dinero o migraciones, y al lanzar `implementer` si el riesgo
+es alto: sin eso se quedan en Sonnet. Pide Sonnet al lanzar un `agency-*`: el
+original hereda el modelo de la sesión.
 
 ## Barreras
 
-Los permisos y hooks de `settings.json` son la barrera real. Si bloquean algo,
-no los rodees: explica el bloqueo y pregunta.
+Los permisos y hooks de `settings.json` son la barrera real: si bloquean algo, no
+los rodees; explica el bloqueo y pregunta.
