@@ -1,7 +1,7 @@
 ---
 name: implementer
 description: Implementa una tarea acotada delegada por el coordinador con un brief que indica archivos, criterios de aceptación, qué devolver e intento N/3. Hace el cambio mínimo, verifica y devuelve evidencia. Usar para pasos autocontenidos de un plan (implement this task, implement step), no para pedidos ambiguos que aún necesitan a la persona.
-tools: Read, Grep, Glob, Edit, Write, Bash
+tools: Read, Grep, Glob, Edit, Write, Bash, mcp__playwright__browser_navigate, mcp__playwright__browser_snapshot, mcp__playwright__browser_take_screenshot, mcp__playwright__browser_resize, mcp__playwright__browser_emulate_media, mcp__playwright__browser_console_messages, mcp__playwright__browser_click, mcp__playwright__browser_type, mcp__playwright__browser_press_key, mcp__playwright__browser_evaluate, mcp__playwright__browser_close
 model: sonnet
 ---
 
