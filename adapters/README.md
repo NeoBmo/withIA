@@ -35,8 +35,22 @@ cd withIA
 
 ### Instalar
 
+Primero guarda lo que ya tengas. Si te arrepientes, esta copia es la que usa
+[Desinstalar o volver atrás](#desinstalar-o-volver-atrás). Ignora los avisos de lo que
+no exista:
+
 ```bash
-mkdir -p ~/.claude/agents ~/.claude/skills ~/.claude/hooks
+mkdir -p ~/.claude-backup-withia
+```
+
+```bash
+cp -r ~/.claude/CLAUDE.md ~/.claude/AGENTS.md ~/.claude/PROFILE.md ~/.claude/settings.json ~/.claude/agents ~/.claude/skills ~/.claude/rules ~/.claude/hooks ~/.claude-backup-withia/
+```
+
+Ahora instala:
+
+```bash
+mkdir -p ~/.claude/agents ~/.claude/skills ~/.claude/rules ~/.claude/hooks
 ```
 
 ```bash
@@ -49,6 +63,10 @@ cp -n agents/*.md ~/.claude/agents/
 
 ```bash
 cp -rn skills/* ~/.claude/skills/
+```
+
+```bash
+cp -n rules/*.md ~/.claude/rules/
 ```
 
 ```bash
@@ -73,9 +91,11 @@ global de usuario, sólo de proyecto.
 No es opcional, porque `cp -n` pudo saltarse algo. Abre una sesión nueva:
 
 1. Aparecen los agentes `implementer`, `reviewer` y `writer`.
-2. Aparecen las skills `discover`, `sdd`, `vet` y `web-quality-gate`, y su contenido es el del repo: una
-   skill antigua con el mismo nombre también aparece. Compruébalo con el bloque de
-   abajo, que no debe imprimir nada.
+2. Aparecen las skills `discover`, `hardening-server-writes`, `sdd`, `vet` y
+   `web-quality-gate`, y su contenido es el del repo: una skill antigua con el mismo
+   nombre también aparece. La regla `rules/frontend.md` no se ve hasta tocar un
+   archivo de interfaz. Compruébalo todo con el bloque de abajo, que no debe imprimir
+   nada.
 3. `/memory` lista el documento y sus imports.
 4. Prueba de conducta: pregunta qué debe consultarte antes de actuar. Debe
    responder con los casos de la sección "Autonomía" de
@@ -85,7 +105,7 @@ No es opcional, porque `cp -n` pudo saltarse algo. Abre una sesión nueva:
 Para el punto 2:
 
 ```bash
-for s in discover sdd vet web-quality-gate; do diff -r "skills/$s" ~/.claude/skills/"$s"; done
+for f in skills/* rules/*; do diff -r "$f" ~/.claude/"$f"; done
 ```
 
 Para el punto 5, crea ese repo. El remoto es ficticio y nunca se contacta:
@@ -130,6 +150,10 @@ cp -r skills/* ~/.claude/skills/
 ```
 
 ```bash
+cp rules/*.md ~/.claude/rules/
+```
+
+```bash
 cp adapters/claude-code/hooks/*.js ~/.claude/hooks/
 ```
 
@@ -145,23 +169,71 @@ git diff ORIG_HEAD HEAD -- adapters/claude-code/CLAUDE.md adapters/claude-code/s
 Las copias se desfasan si no repites estos pasos. Lo aceptamos: un script o enlaces
 simbólicos añaden piezas y fricción en Windows.
 
+### Desinstalar o volver atrás
+
+Si sólo quieres apagar el modo `auto`, quita `"defaultMode": "auto"` de
+`~/.claude/settings.json`, y la coma de la línea anterior. Lo demás sigue igual.
+
+Para quitarlo todo, hazlo tú en la terminal, desde tu copia de `withIA`: las reglas
+`deny` frenan al agente con `rm -rf`. Estos pasos borran también lo que hayas cambiado
+después de instalar, tu `PROFILE.md` incluido, así que guarda antes lo que quieras
+conservar.
+
+Borra lo instalado:
+
+```bash
+rm -f ~/.claude/AGENTS.md ~/.claude/PROFILE.md ~/.claude/CLAUDE.md ~/.claude/settings.json
+```
+
+```bash
+for f in agents/*.md rules/*.md; do rm -f ~/.claude/"$f"; done
+```
+
+```bash
+for f in skills/*; do rm -rf ~/.claude/"$f"; done
+```
+
+```bash
+for f in adapters/claude-code/hooks/*.js; do rm -f ~/.claude/hooks/"${f##*/}"; done
+```
+
+Restaura lo tuyo. Si `~/.claude-backup-withia` no existe o está vacía, no tenías nada
+y puedes saltarte estos dos pasos:
+
+```bash
+cp -r ~/.claude-backup-withia/. ~/.claude/
+```
+
+La comprobación no debe imprimir nada: lo que imprima es un archivo de tu copia que no
+volvió igual.
+
+```bash
+diff -rq ~/.claude-backup-withia ~/.claude | grep -v "^Only in $HOME/.claude[:/]"
+```
+
+Abre una sesión nueva: ya no deben aparecer `implementer`, `reviewer` ni `writer`, y
+`/memory` no debe listar `AGENTS.md`. Cuando lo veas, puedes borrar la copia y la
+carpeta `withIA`. Tus proyectos y tu sesión de Claude Code no se tocan.
+
 ### Qué está probado
 
 Estado: **parcial**. Este paquete es la configuración que usamos a diario en
-Windows 11 con Claude Code 2.1.310. Sólo cambian `PROFILE.md`, que es personal, y
-tres reglas `ask` de despliegue de nuestro stack en `settings.json`. La instalación
-desde un clon limpio sigue sin probarse con cuenta y modelo reales.
+Windows 11 con Claude Code 2.1.310. Sólo cambian `PROFILE.md`, que es personal; tres
+reglas `ask` de despliegue de nuestro stack en `settings.json`, y la orden de los dos
+hooks: aquí usa `$HOME` para valer en cualquier equipo y en nuestra configuración
+diaria, una ruta absoluta. La instalación desde un clon limpio sigue sin probarse con
+cuenta y modelo reales.
 
 | Ejecutado en Windows 11 | Sin probar |
 |---|---|
-| `diff` sin diferencias entre el repo y `~/.claude`: `AGENTS.md`, `CLAUDE.md`, agentes, hooks y las cuatro skills. En `settings.json` coinciden `allow` y `deny` | `git clone` real e instalación desde cero con modelo real |
-| `claude -p` con Haiku, en modo `auto`: cargan `implementer`, `reviewer`, `writer` y las cuatro skills | Las cinco comprobaciones de [Comprobar](#comprobar) seguidas, en sesión interactiva |
-| `block-commit-on-main` en sesión real: un commit en `main` con remoto se bloqueó y el repo siguió con 1 commit | El mismo hook dentro de un subagente |
+| `diff` sin diferencias entre el repo y `~/.claude`: `AGENTS.md`, `CLAUDE.md`, agentes, hooks, las cinco skills y `rules/frontend.md`. En `settings.json` coinciden `allow` y `deny` | `git clone` real e instalación desde cero con modelo real |
+| `claude -p` con Haiku, en modo `auto`: cargan `implementer`, `reviewer`, `writer` y cuatro skills. `hardening-server-writes` llegó después y no se repitió ahí: se activó en [su prueba](../skills.md#prueba-de-hardening-server-writes), con Sonnet | Las cinco comprobaciones de [Comprobar](#comprobar) seguidas, en sesión interactiva |
+| `block-commit-on-main` en sesión real, con la orden de ruta absoluta: un commit en `main` con remoto se bloqueó y el repo siguió con 1 commit | El mismo hook dentro de un subagente, y los dos hooks en sesión real con la orden `$HOME` que se publica |
 | `reviewer` en sesión real: cargó `web-quality-gate`, navegó y sacó un snapshot con Playwright, sin Edit ni Write. El primer intento falló porque le faltaba `ToolSearch`; corregido, también en `implementer` | Una revisión completa de una web con `web-quality-gate` |
 | `implementer` en sesión real: navegó con Playwright y devolvió `HECHO` | `writer` en sesión real |
 | `node --test scripts/test-hook.test.js`: 35 casos de los dos hooks contra repos temporales | `check-encoding` dentro de una sesión |
 | Reglas de `settings.json` en sesión: `cat .env` rechazado. `node -e` sí leyó el archivo, como advierte [Barreras](#barreras) | El clasificador de auto mode provocado a propósito |
-| Los `cp` de [Instalar](#instalar) dejan los archivos en su sitio con un `HOME` vacío, desde una copia local: archivos, no una sesión | macOS, Linux y el sandbox, que no existe en Windows nativo |
+| [Instalar](#instalar) y [Desinstalar o volver atrás](#desinstalar-o-volver-atrás) con un `HOME` de prueba, vacío y con archivos previos: dejan cada archivo en su sitio y lo previo vuelve igual. Desde una copia local: archivos, no una sesión. El borrado de skills se probó como `rm -r` con ruta explícita, porque `deny` frena `rm -rf ~/...` | macOS, Linux y el sandbox, que no existe en Windows nativo |
 
 Por eso no prometemos un tiempo de instalación: aún no lo hemos cronometrado.
 

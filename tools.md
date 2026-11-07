@@ -32,7 +32,10 @@ los veredictos y la ficha viven en [skills/vet](skills/vet/SKILL.md).
 Un ejemplo: [Agency Agents](https://github.com/msitarzewski/agency-agents) trae
 cientos de subagentes. Instalarlos todos inflaría el contexto y empeoraría la elección
 automática de agente. Admitimos 7, fijados a un commit y forzados a Sonnet, y los
-retiramos el 2026-11-07 porque en 3 semanas no se usó ninguno.
+retiramos el 2026-11-07: no se usó ninguno en los 14 días con datos, del 2026-10-24 al
+2026-11-06. Es una ventana corta y ese 0 no prueba que no sirvan. La retirada se
+sostiene porque cada descripción se paga en todas las sesiones, y volver a admitirlos
+sólo pide repasar la puerta.
 
 ## Admitidas
 
@@ -93,7 +96,7 @@ un aval.
 ## Fallos reales
 
 Antes de crear skills miramos qué falla de verdad. El 2026-11-07 revisamos commits de
-arreglo y 3 semanas de conversaciones, y salieron **88 casos**: 60 de git, 18 de
+arreglo y 14 días de conversaciones, y salieron **88 casos**: 60 de git, 18 de
 correcciones humanas y 10 errores admitidos por el modelo. Las skills tocan unos 14.
 Casi todo lo demás lo cubren `reviewer`, reglas, hooks y CI, o no lo arregla una skill.
 
@@ -128,7 +131,7 @@ Hay que leerlo con cuidado:
 |---|---|---|
 | [TokenRouter](https://www.tokenrouter.com/) | Gateway de pago: los prompts pasan por un tercero y no encontramos términos ni política de privacidad | 2027-01-20 |
 | [Claude-Mem](https://github.com/thedotmack/claude-mem) | Se solapa con Engram. Además necesita un worker persistente, usa un observador de pago tras 30 días e incluye telemetría (`posthog-node`) | 2027-01-20 |
-| [Agency Agents](https://github.com/msitarzewski/agency-agents), los 7 que admitimos | Retirados el 2026-11-07: 0 usos en 3 semanas. Si los enlazas: el `model: sonnet` era un añadido nuestro, y `agency-reality-checker` y `agency-evidence-collector` citan un script que no existe en su repo | 2027-02-05 |
+| [Agency Agents](https://github.com/msitarzewski/agency-agents), los 7 que admitimos | Retirados el 2026-11-07: 0 usos en 14 días, una ventana corta. Si los enlazas: el `model: sonnet` era un añadido nuestro, y `agency-reality-checker` y `agency-evidence-collector` citan un script que no existe en su repo | 2027-02-05 |
 | [Superpowers](https://github.com/obra/superpowers) (como plugin global) | No por seguridad, sino porque inyecta en cada sesión un segundo proceso obligatorio que compite con el nuestro. Su coste está en [tokens.md](tokens.md). De él enlazamos `systematic-debugging`, con atribución | 2027-02-03 |
 
 ## Diferidas

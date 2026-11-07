@@ -89,7 +89,7 @@ es la protección de rama en GitHub. Ver [Barreras](adapters/README.md#barreras)
 | | Qué | Dónde |
 |---|---|---|
 | **Creado por nosotros** | Doctrina, agentes, skills, hooks y la medición de consumo | [skills.md](skills.md), [core/](core/AGENTS.md), [adapters/](adapters/README.md), [tokens.md](tokens.md) |
-| **Recomendado** | Skills de expertos, MCP y plugins, también los de Anthropic, con autor y enlace | [tools.md](tools.md) |
+| **De terceros** | Skills de expertos, MCP y plugins, también los de Anthropic, con autor y enlace. Recomendamos sólo lo [admitido](tools.md#admitidas); lo demás que tenemos instalado va marcado | [tools.md](tools.md), [skills.md](skills.md#de-terceros-instalado) |
 
 Nada nace de cero. El bucle y los roles son conocimiento común, y varias ideas
 coinciden con [Superpowers](https://github.com/obra/superpowers) o con las guías de

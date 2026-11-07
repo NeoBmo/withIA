@@ -2,14 +2,14 @@
 
 Inventario de todo lo que está activo en nuestra configuración, con lo que hace,
 de quién viene, cuánto lo usamos y cuánto vale. Separa lo creado por nosotros de lo
-recomendado por otros. El porqué de admitir o rechazar cada herramienta está en
+que viene de otros. El porqué de admitir o rechazar cada herramienta está en
 [tools.md](tools.md); aquí está si de verdad nos sirve.
 
 Una skill es un conjunto de instrucciones que el agente carga cuando las necesita.
 Un plugin empaqueta skills, comandos y hooks. Un agente (subagent) es otro Claude con
 contexto limpio al que se le delega una tarea.
 
-**Aviso:** son 3 semanas de una sola persona, una muestra pequeña. Un uso más o
+**Aviso:** son 14 días de una sola persona, una muestra pequeña. Un uso más o
 menos cambia una fila. Un 0 significa "no registrado", no "inútil": una skill de
 migraciones puede pasar meses sin hacer falta y salvarte el día que la necesitas.
 
@@ -21,7 +21,7 @@ no ocupan lista y 3 agentes.
 | Dato | Cómo sale |
 |---|---|
 | Usos | Llamadas a la herramienta `Skill`, comandos con barra y lanzamientos de subagente en las transcripciones de Claude Code, contando sólo nombres y sin repetir el id de la llamada |
-| Ventana | Del 2026-10-17 al 2026-11-07, sin incluir este último: 21 días y 31 sesiones |
+| Ventana | Del 2026-10-24 al 2026-11-06, ambos incluidos: 14 días naturales y 27 sesiones. Excluye las sesiones que sólo tienen errores de API (`<synthetic>`), como [tokens.md](tokens.md#método), que además corta un día antes |
 | Sesiones | Entre paréntesis, en cuántas sesiones distintas apareció |
 | Bytes | Lo que ocupa su línea en la lista de skills, que entra en cada sesión. Una skill manual (`disable-model-invocation`) ocupa 0. En los agentes, los bytes de su descripción |
 
@@ -35,7 +35,7 @@ agentes lanzados por un workflow pueden quedar fuera.
 | **Alto** | 2 o más usos en 2 o más sesiones, y además evita un fallo real o aporta algo que el modelo no hace solo |
 | **Medio** | Se usó, o aporta algo que el modelo no hace solo, pero no ambas cosas |
 | **Bajo** | No se usó y lo que hace ya lo cubre el modelo u otra entrada activa |
-| **Sin datos** | Lleva menos de 3 semanas instalada: no ha tenido ocasión |
+| **Sin datos** | Entró en la última semana de la ventana o después: no ha tenido ocasión |
 
 El coste en lista desempata: entre dos parecidas, se va la más cara. Lo que evita un
 fallo real sale de [Fallos reales](tools.md#fallos-reales).
@@ -85,10 +85,14 @@ antes de cada commit, según la
 [documentación](https://code.claude.com/docs/en/skills), y por eso no va en el
 nivel personal.
 
-## Recomendado de terceros
+## De terceros, instalado
 
 Trabajo de otras personas, que enlazamos y no copiamos. La licencia es la que declara
 cada fuente. Si dos skills hacen lo mismo, gana la que ya usamos.
+
+**Instalado no significa recomendado.** Recomendamos lo que pasó la puerta, listado en
+[Admitidas](tools.md#admitidas). Lo marcado *sin evaluar* no la ha pasado: ver
+[Sin evaluar](tools.md#sin-evaluar).
 
 ### Skills
 
@@ -100,13 +104,12 @@ cada fuente. Si dos skills hacen lo mismo, gana la que ya usamos.
 | [mobile-native](https://github.com/emilkowalski/skills) | Hace que una web se sienta nativa en el móvil | Emil Kowalski, MIT | 1 (1) | 757 | Medio | Mantener |
 | [animation-performance](https://github.com/emilkowalski/skills) | Encuentra por qué una animación pierde fotogramas | Emil Kowalski, MIT | 0 | 834 | Medio | Vigilar |
 | [review-animations](https://github.com/emilkowalski/skills) | Critica el movimiento existente con un listón alto. Manual | Emil Kowalski, MIT | 0 | 0 | Medio | Mantener |
-| [grilling](https://github.com/mattpocock/skills) | Te interroga sobre un plan hasta que no queda nada sin decidir | Matt Pocock, MIT | 0 | 164 | Medio | Vigilar |
+| [grilling](https://github.com/mattpocock/skills), *sin evaluar* | Te interroga sobre un plan hasta que no queda nada sin decidir | Matt Pocock, MIT | 0 | 164 | Medio | Vigilar |
 | [industrial-brutalist-ui](https://github.com/Leonxlnx/taste-skill-classics) | Un estilo visual mecánico, con carácter. Manual | Leonxlnx, MIT | 0 | 0 | Medio | Mantener |
-| [web-design-guidelines](https://github.com/vercel-labs/web-interface-guidelines) | Revisa UI contra una guía que descarga de `main` en cada uso | Vercel, licencia sin confirmar | 0 | 209 | Bajo | Retirar |
+| [web-design-guidelines](https://github.com/vercel-labs/web-interface-guidelines), *sin evaluar* | Revisa UI contra una guía remota que descarga en cada uso, fijada a un commit en nuestra copia | Vercel, licencia sin confirmar | 0 | 209 | Bajo | Retirar |
 
-`web-design-guidelines` es la propuesta más clara. Sin usos, se solapa con
-`web-quality-gate` y con [rules/frontend.md](rules/frontend.md), y carga como
-instrucciones un archivo remoto sin versión fijada.
+`web-design-guidelines` es la propuesta más clara: no tiene usos y se solapa con
+`web-quality-gate` y con [rules/frontend.md](rules/frontend.md).
 
 ### Plugins
 
@@ -115,19 +118,19 @@ instrucciones un archivo remoto sin versión fijada.
 | [frontend-design](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/frontend-design) | Da dirección estética a una UI nueva | Anthropic, Apache-2.0 | 2 (1) | 239 | Medio | Mantener |
 | [headroom](https://github.com/petrovicistefan/claude-code-plugins/tree/main/headroom): `headroom` | Trabaja con logs, JSON o CSV grandes sin llenar el contexto | Stefan Petrovici, MIT | 0 | 175 | Medio | Vigilar |
 | headroom: `peek` | Saca el esquema de un archivo grande para leer sólo lo necesario | Stefan Petrovici, MIT | 0 | 80 | Medio | Vigilar |
-| ralph-loop: `ralph-loop` | Repite el mismo prompt en bucle hasta acabar | Anthropic, Apache-2.0 | 0 | 60 | Bajo | Retirar |
-| ralph-loop: `cancel-ralph` | Detiene ese bucle | Anthropic, Apache-2.0 | 0 | 51 | Bajo | Retirar |
-| ralph-loop: `help` | Explica el plugin | Anthropic, Apache-2.0 | 0 | 67 | Bajo | Retirar |
-| engineering: `architecture` | Escribe o evalúa un registro de decisión de arquitectura | Anthropic, licencia sin confirmar | 0 | 310 | Bajo | Vigilar |
-| engineering: `code-review` | Revisa cambios por seguridad, rendimiento y corrección | Anthropic, licencia sin confirmar | 0 | 277 | Bajo | Vigilar |
-| engineering: `debug` | Sesión guiada para reproducir, aislar y arreglar un fallo | Anthropic, licencia sin confirmar | 0 | 281 | Bajo | Vigilar |
-| engineering: `deploy-checklist` | Lista de comprobación antes de desplegar | Anthropic, licencia sin confirmar | 0 | 276 | Bajo | Vigilar |
-| engineering: `documentation` | Escribe documentación técnica | Anthropic, licencia sin confirmar | 0 | 299 | Bajo | Vigilar |
-| engineering: `incident-response` | Gestiona un incidente y su informe posterior | Anthropic, licencia sin confirmar | 0 | 299 | Bajo | Vigilar |
-| engineering: `standup` | Resume la actividad reciente para una reunión diaria | Anthropic, licencia sin confirmar | 0 | 271 | Bajo | Vigilar |
-| engineering: `system-design` | Ayuda a diseñar sistemas, APIs y datos | Anthropic, licencia sin confirmar | 0 | 277 | Bajo | Vigilar |
-| engineering: `tech-debt` | Identifica y prioriza deuda técnica | Anthropic, licencia sin confirmar | 0 | 259 | Bajo | Vigilar |
-| engineering: `testing-strategy` | Diseña estrategias y planes de prueba | Anthropic, licencia sin confirmar | 0 | 268 | Bajo | Vigilar |
+| ralph-loop, *sin evaluar*: `ralph-loop` | Repite el mismo prompt en bucle hasta acabar | Anthropic, Apache-2.0 | 0 | 60 | Bajo | Retirar |
+| ralph-loop, *sin evaluar*: `cancel-ralph` | Detiene ese bucle | Anthropic, Apache-2.0 | 0 | 51 | Bajo | Retirar |
+| ralph-loop, *sin evaluar*: `help` | Explica el plugin | Anthropic, Apache-2.0 | 0 | 67 | Bajo | Retirar |
+| engineering, *sin evaluar*: `architecture` | Escribe o evalúa un registro de decisión de arquitectura | Anthropic, licencia sin confirmar | 0 | 310 | Bajo | Vigilar |
+| engineering, *sin evaluar*: `code-review` | Revisa cambios por seguridad, rendimiento y corrección | Anthropic, licencia sin confirmar | 0 | 277 | Bajo | Vigilar |
+| engineering, *sin evaluar*: `debug` | Sesión guiada para reproducir, aislar y arreglar un fallo | Anthropic, licencia sin confirmar | 0 | 281 | Bajo | Vigilar |
+| engineering, *sin evaluar*: `deploy-checklist` | Lista de comprobación antes de desplegar | Anthropic, licencia sin confirmar | 0 | 276 | Bajo | Vigilar |
+| engineering, *sin evaluar*: `documentation` | Escribe documentación técnica | Anthropic, licencia sin confirmar | 0 | 299 | Bajo | Vigilar |
+| engineering, *sin evaluar*: `incident-response` | Gestiona un incidente y su informe posterior | Anthropic, licencia sin confirmar | 0 | 299 | Bajo | Vigilar |
+| engineering, *sin evaluar*: `standup` | Resume la actividad reciente para una reunión diaria | Anthropic, licencia sin confirmar | 0 | 271 | Bajo | Vigilar |
+| engineering, *sin evaluar*: `system-design` | Ayuda a diseñar sistemas, APIs y datos | Anthropic, licencia sin confirmar | 0 | 277 | Bajo | Vigilar |
+| engineering, *sin evaluar*: `tech-debt` | Identifica y prioriza deuda técnica | Anthropic, licencia sin confirmar | 0 | 259 | Bajo | Vigilar |
+| engineering, *sin evaluar*: `testing-strategy` | Diseña estrategias y planes de prueba | Anthropic, licencia sin confirmar | 0 | 268 | Bajo | Vigilar |
 
 Un plugin se apaga entero, así que la decisión de `engineering` es una sola: sus 10
 entradas suman 2817 bytes y ninguna se usó. Varias se solapan con `reviewer`,

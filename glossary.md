@@ -122,13 +122,16 @@ a tu forma de trabajar, y puede chocar con ella.
 *Permission.* Una regla que dice qué puede hacer el agente: permitir (`allow`),
 preguntar (`ask`) o denegar (`deny`).
 Ejemplo: puede leer tu código sin avisar, debe preguntar antes de un `git push` y
-nunca puede leer tu `.env`.
+una regla le niega leer tu `.env`, el archivo de tus claves, con sus herramientas. No
+es absoluto: un script sí podría leerlo. Ver [Barreras](adapters/README.md#barreras).
 
 ### Hook
 
 *Hook, gancho.* Un script que corre solo antes o después de una acción del agente.
 A diferencia de una instrucción, no depende de que el modelo la recuerde.
-Ejemplo: un guardia en la puerta. El nuestro para cualquier `git commit` en `main`.
+Ejemplo: un guardia en la puerta. El nuestro para los `git commit` en `main` de un
+repo con remoto, si el comando va escrito tal cual. Ver
+[Límites que conviene conocer](adapters/README.md#límites-que-conviene-conocer).
 
 ### Sandbox
 
@@ -187,6 +190,67 @@ Ejemplo: el manual que le das a alguien en su primer día.
 *Sin traducción.* La misma idea, como convención compartida por varios agentes.
 Ejemplo: nuestro [core/AGENTS.md](core/AGENTS.md) guarda el proceso, y el `CLAUDE.md`
 de nuestro adaptador lo importa.
+
+## Terminal y Git
+
+### Terminal
+
+*Terminal o consola.* La ventana donde das órdenes escribiéndolas, en vez de con
+clics. El programa que las interpreta se llama shell, como Git Bash.
+Ejemplo: escribes `claude`, pulsas Intro y arranca el agente.
+
+### Git
+
+*Git.* El programa que guarda el historial de tu código, para ver qué cambió y volver
+atrás. GitHub es un sitio web que aloja esos proyectos.
+Ejemplo: un botón de deshacer que recuerda todo el proyecto.
+
+### Repositorio
+
+*Repository o repo.* La carpeta de un proyecto, con todo su historial en Git.
+Ejemplo: `withIA` es un repo.
+
+### Clonar
+
+*Clone.* Descargar a tu equipo una copia completa de un repo.
+Ejemplo: `git clone https://github.com/NeoBmo/withIA`.
+
+### Commit
+
+*Commit.* Un punto guardado en el historial, con un mensaje que dice qué cambió.
+Ejemplo: una foto del proyecto con una nota al dorso.
+
+### Rama
+
+*Branch.* Una línea de trabajo aparte. `main` es la rama principal.
+Ejemplo: probar una receta en otra olla sin tocar la que ya sale bien.
+
+### Diff
+
+*Diff, diferencia.* La lista de líneas que se añadieron o quitaron entre dos versiones.
+Ejemplo: el control de cambios de un documento.
+
+### Remoto
+
+*Remote.* La copia del repo que vive fuera de tu equipo, normalmente en GitHub.
+Ejemplo: `origin` es el nombre habitual del remoto.
+
+### Push
+
+*Push, empujar.* Subir tus commits al remoto. Es el momento en que tu trabajo sale de
+tu máquina.
+Ejemplo: `git push`. Por eso nuestro agente pregunta antes de hacerlo.
+
+### PR
+
+*Pull request, solicitud de integración.* La propuesta de unir una rama a otra en
+GitHub, con su diff a la vista.
+Ejemplo: enseñar tus cambios y revisarlos antes de que entren en `main`.
+
+### API
+
+*Application Programming Interface.* La puerta por la que un programa habla con otro.
+Ejemplo: tu programa pide una respuesta a la API de un modelo y paga por tokens.
 
 ## El método
 

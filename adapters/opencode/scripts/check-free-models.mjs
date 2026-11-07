@@ -10,8 +10,13 @@ import { join } from "node:path"
 const root = process.argv[2] ?? join(homedir(), ".config", "opencode")
 const agents = join(root, "agents")
 const routing = join(root, "docs", "MODEL-ROUTING.md")
+const configs = ["opencode.jsonc", "opencode.json"].map((name) => join(root, name)).filter((file) => existsSync(file))
+if (configs.length === 0) {
+  console.error(`No hay opencode.jsonc ni opencode.json en ${root}. Créalo: ver "Instalar" en adapters/opencode/README.md.`)
+  process.exit(1)
+}
 const sources = [
-  join(root, "opencode.jsonc"),
+  ...configs,
   ...(existsSync(routing) ? [routing] : []),
   ...(existsSync(agents) ? readdirSync(agents).map((name) => join(agents, name)) : []),
 ]
@@ -48,5 +53,8 @@ for (const ref of [...wanted].sort()) {
 }
 
 console.log(`${wanted.size} modelos revisados, ${failures} con problemas.`)
-if (wanted.size === 0) failures = 1
+if (wanted.size === 0) {
+  console.error("Ningún modelo opencode/... citado en la configuración: no hay nada que comprobar.")
+  failures = 1
+}
 process.exit(failures ? 1 : 0)

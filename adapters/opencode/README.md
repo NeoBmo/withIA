@@ -1,7 +1,8 @@
 # Adaptador para OpenCode
 
-Lo mínimo para que OpenCode V2 trabaje con las mismas barreras que Claude Code.
-Probado con OpenCode v2.1.4 en Windows 11. En macOS y Linux no se ha probado.
+Lo mínimo para usar OpenCode V2 con algunas barreras. **Son menos que en Claude
+Code**: ver [Qué cubre y qué no](#qué-cubre-y-qué-no). Probado con OpenCode v2.1.4 en
+Windows 11. En macOS y Linux no se ha probado.
 
 | Archivo | Qué hace | Destino |
 |---|---|---|
@@ -10,37 +11,71 @@ Probado con OpenCode v2.1.4 en Windows 11. En macOS y Linux no se ha probado.
 | `permissions.jsonc` | Pide confirmación en push, PR, merge, publicación y despliegue | Al final de `permissions` en `opencode.jsonc` |
 | `scripts/check-free-models.mjs` | Comprueba coste 0, estado `active` y variante de cada modelo de tu configuración | `~/.config/opencode/scripts/` |
 
+## Qué cubre y qué no
+
+| Riesgo | Con este adaptador | Con [Claude Code](../README.md#barreras) |
+|---|---|---|
+| Commit en `main` o `master` con remoto | Lo bloquea `guard.js` | Lo bloquea un hook |
+| Push, PR, merge, publicación y despliegue | Regla `ask`, que `--auto` se salta | Regla `ask`, sin los despliegues, que añades tú |
+| Leer `.env`, claves y credenciales | **Sin regla** | `deny`, con límites |
+| `git reset --hard`, `git clean`, `rm -rf` | **Sin regla** | `deny` en su forma literal |
+| `git push --force` | Cae en el `ask` de `git push`, sin `deny` | `deny` en su forma literal |
+| Archivos con BOM o bytes NUL | Sin aviso | Aviso de `check-encoding` |
+
+`permissions.jsonc` no trae ninguna regla `deny`. Si quieres frenar la lectura de
+secretos o los comandos destructivos, añádelas tú en `permissions`: no las hemos
+probado.
+
 ## Instalar
 
-El plugin no necesita dependencias. Desde la raíz del repo, en PowerShell:
+Es parte de la [instalación de OpenCode](../other-agents.md#opencode), no un extra:
+`rules.md` exige el script de modelos. El plugin no necesita dependencias. Desde la
+raíz del repo, en Git Bash:
 
-```powershell
-New-Item -ItemType Directory -Force "$HOME/.config/opencode/plugins", "$HOME/.config/opencode/scripts"
+```bash
+mkdir -p ~/.config/opencode/plugins ~/.config/opencode/scripts
 ```
 
-```powershell
-Copy-Item adapters/opencode/plugins/guard.js "$HOME/.config/opencode/plugins/"
+```bash
+cp -n adapters/opencode/plugins/guard.js ~/.config/opencode/plugins/
 ```
 
-```powershell
-Copy-Item adapters/opencode/scripts/check-free-models.mjs "$HOME/.config/opencode/scripts/"
+```bash
+cp -n adapters/opencode/scripts/check-free-models.mjs ~/.config/opencode/scripts/
 ```
 
-Pega las reglas de `permissions.jsonc` al final de `permissions` y recarga:
+Pega las reglas de `permissions.jsonc` al final de `permissions`, en
+`~/.config/opencode/opencode.jsonc`. El nombre `opencode.json` también vale. Si no
+tienes ninguno de los dos, créalo con este contenido y pega las reglas dentro de los
+corchetes:
 
-```powershell
+```jsonc
+{
+  "permissions": [
+  ]
+}
+```
+
+Recarga:
+
+```bash
 opencode reload
 ```
 
-Comprueba que el plugin cargó y que tus modelos siguen siendo gratuitos:
+Comprueba que el plugin cargó y que tus modelos siguen siendo gratuitos. El script
+termina con error si tu configuración no cita ningún modelo `opencode/...`: sin
+modelos no hay nada que comprobar, y un resultado vacío no debe parecer un aprobado.
 
-```powershell
+```bash
 opencode plugin list
 ```
 
-```powershell
-node "$HOME/.config/opencode/scripts/check-free-models.mjs"
+```bash
+node ~/.config/opencode/scripts/check-free-models.mjs
 ```
+
+Para actualizar, repite los dos `cp` sin `-n` y compara `permissions.jsonc` con lo
+que pegaste.
 
 ## De dónde sale el coste
 

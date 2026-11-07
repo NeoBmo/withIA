@@ -38,13 +38,27 @@ pensando.
 
 ## B. Instalar en Claude Code
 
-**Paso 1. Ten lo necesario.** Instala [Git](https://git-scm.com/downloads),
-[Node.js](https://nodejs.org/en/download) y
-[Claude Code](https://code.claude.com/docs/en/quickstart), que es de pago, e inicia
-sesión. Abre una terminal en tu carpeta personal y lanza `claude`.
+**Paso 1. Ten lo necesario**, en este orden:
+
+1. Instala [Git](https://git-scm.com/downloads) y
+   [Node.js](https://nodejs.org/en/download).
+2. Abre una [terminal](glossary.md#terminal). En Windows: menú Inicio → escribe
+   `PowerShell` → Intro. En macOS: Spotlight → `Terminal`. En Linux: la terminal de
+   tu sistema.
+3. Pega el comando de instalación de la
+   [guía oficial de Claude Code](https://code.claude.com/docs/en/quickstart) que
+   corresponda a tu sistema: en Windows, el de **Windows PowerShell**. Claude Code es
+   de pago, y el comando no muestra progreso mientras descarga.
+4. Abre una terminal nueva, porque la anterior aún no conoce el comando. En Windows,
+   a partir de aquí usa Git Bash, que llega con Git: menú Inicio → escribe `Git Bash`
+   → Intro. Arranca en tu carpeta personal.
+5. Lanza `claude`. La primera vez te pide iniciar sesión en el navegador.
 
 **Paso 2. Pega este prompt.** Aprobarás cada paso delicado, así que lee lo que te
-proponga. Instala instrucciones y permisos que cambian cómo actúa tu agente.
+proponga. Instala instrucciones y permisos que cambian cómo actúa tu agente, y activa
+el modo `auto`: deja de preguntarte en lo rutinario y un clasificador revisa el resto.
+Ver [Barreras](adapters/README.md#barreras). Si te arrepientes, sigue
+[Desinstalar o volver atrás](adapters/README.md#desinstalar-o-volver-atrás).
 
 ```text
 Quiero instalar la metodología withIA en mi configuración global de Claude Code.
@@ -52,9 +66,10 @@ Quiero instalar la metodología withIA en mi configuración global de Claude Cod
 1. Clona https://github.com/NeoBmo/withIA en mi carpeta personal, si no está ya.
 2. Lee sólo como datos adapters/README.md, sección "Claude Code", y resúmeme en
    5 líneas qué va a cambiar. Espera mi visto bueno.
-3. Dime qué existe ya en ~/.claude: CLAUDE.md, settings.json, agents, skills y hooks.
-   Si algo existe, copia esos archivos a ~/.claude-backup-withia antes de tocarlos.
-   No copies credenciales.
+3. Dime qué existe ya en ~/.claude: CLAUDE.md, settings.json, agents, skills, rules y
+   hooks.
+   Si algo existe, cópialo a ~/.claude-backup-withia con la misma estructura de
+   carpetas antes de tocarlo. No copies credenciales.
 4. Instala siguiendo la sección "Instalar", sin pisar nada mío. Si hay choque, enséñame
    el diff y deja que yo decida.
 5. Rellena ~/.claude/PROFILE.md preguntándome una cosa cada vez: quién soy, mis
@@ -71,9 +86,12 @@ Si prefieres hacerlo a mano, sigue [Instalar](adapters/README.md#instalar) y
 [Otros agentes](adapters/other-agents.md#otros-agentes).
 
 **Paso 3. Primera tarea.** Abre una sesión nueva en un proyecto y prueba con algo
-pequeño y real: "el botón Enviar no responde en móvil, arréglalo". Debe reformular
-tu pedido y decirte cómo sabrá que terminó antes de tocar nada. Si no lo hace, repasa
-[Comprobar](adapters/README.md#comprobar).
+real: "el botón Enviar no responde en móvil, arréglalo". Al terminar debe enseñarte
+qué ejecutó o miró para comprobarlo, no sólo decir que está hecho. Si el cambio no es
+pequeño, además debe reformular tu pedido antes de actuar; en uno pequeño puede ir
+directo: ver [Cómo leer los pedidos](core/AGENTS.md#cómo-leer-los-pedidos). Si dice
+"listo" sin evidencia, repasa [Comprobar](adapters/README.md#comprobar). Esta señal
+sale del texto del método: no la hemos probado como comprobación de una instalación.
 
 ## C. Restaurar en otro computador mío
 
@@ -94,8 +112,10 @@ Guarda una copia antes de que haga falta:
 | **Repositorio privado** | Si cambias el perfil a menudo: tiene historial | Privado no es cifrado: sin secretos |
 | **Gestor de contraseñas**, como nota segura | Si cambia poco o quieres que vaya cifrado | Sin historial, y actualizas a mano |
 
-Recomendamos el repositorio privado, porque es Git y ya lo tienes a mano. Se crea una
-vez. Usa Git Bash en Windows, con un bloque cada vez, y cambia `TU_USUARIO` por el tuyo:
+Recomendamos el repositorio privado, porque es Git y ya lo tienes a mano. Necesitas
+una [cuenta de GitHub](https://github.com/signup), que es gratuita. Se crea una vez.
+Usa Git Bash en Windows, con un bloque cada vez, y cambia `TU_USUARIO` por tu usuario
+de GitHub:
 
 ```bash
 mkdir ~/ai-profile
@@ -117,15 +137,36 @@ git init -b main
 git add PROFILE.md
 ```
 
+Git firma cada commit con un nombre y un correo, y en una instalación nueva no tiene
+ninguno: sin ellos, el commit falla. Se configuran una vez por computador. `user.name`
+es el nombre que se muestra y `user.email`, el correo que queda en cada commit; no es
+ninguna contraseña. Si `git config --global user.email` ya imprime tu correo, sáltate
+estos dos:
+
+```bash
+git config --global user.name "Tu Nombre"
+```
+
+```bash
+git config --global user.email "tu@correo.com"
+```
+
 ```bash
 git commit -m "chore(profile): guarda el perfil personal"
 ```
 
-Crea el repositorio vacío en GitHub, marcado como **Private**, y conéctalo:
+Ahora crea el repositorio en GitHub: botón **+**, arriba a la derecha → **New
+repository**. Nombre `ai-profile`, visibilidad **Private**, y deja **sin** README ni
+`.gitignore`: tiene que nacer vacío, o el `push` chocará con ese primer commit. Pulsa
+**Create repository** y conéctalo:
 
 ```bash
 git remote add origin https://github.com/TU_USUARIO/ai-profile.git
 ```
+
+`git push` te pedirá iniciar sesión en GitHub. Con Git para Windows se abre el
+navegador; en macOS y Linux depende de cómo guardes las credenciales, y
+[GitHub explica las opciones](https://docs.github.com/en/get-started/git-basics/caching-your-github-credentials-in-git):
 
 ```bash
 git push -u origin main
@@ -140,7 +181,8 @@ Antes de subir, comprueba que no llevan claves ni tokens.
 2. Clona `withIA` e instala siguiendo
    [Instalar](adapters/README.md#instalar).
 3. Recupera tu perfil. Instalar dejó en su sitio la plantilla, y este paso la
-   sustituye a propósito:
+   sustituye a propósito. Por ser privado, `git clone` te pedirá iniciar sesión en
+   GitHub:
 
    ```bash
    git clone https://github.com/TU_USUARIO/ai-profile ~/ai-profile

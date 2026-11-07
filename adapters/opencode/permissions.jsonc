@@ -1,4 +1,5 @@
-// Pega estas reglas al FINAL de "permissions" en ~/.config/opencode/opencode.jsonc.
+// Pega estas reglas al FINAL de "permissions" en ~/.config/opencode/opencode.jsonc
+// (o opencode.json).
 // Gana la última coincidencia: si van antes de un allow general, no hacen nada.
 [
   { "action": "shell", "resource": "git push *", "effect": "ask" },

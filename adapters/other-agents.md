@@ -12,7 +12,7 @@ Rutas globales de cada herramienta, consultadas el 2026-11-06: envejecerán ráp
 | Herramienta | Documento global | Skills | Agentes | MCP | Barreras | Estado | Fuente y fecha |
 |---|---|---|---|---|---|---|---|
 | Claude Code | `~/.claude/CLAUDE.md`, con `@AGENTS.md` | `~/.claude/skills/<nombre>/SKILL.md` | `~/.claude/agents/`, Markdown | `claude mcp add --scope user` | `~/.claude/settings.json`: permisos y hooks | Ver [Qué está probado](README.md#qué-está-probado) | [memoria](https://code.claude.com/docs/en/memory) · [skills](https://code.claude.com/docs/en/skills) · [agentes](https://code.claude.com/docs/en/sub-agents) · [MCP](https://code.claude.com/docs/en/mcp) · [hooks](https://code.claude.com/docs/en/hooks) · [permisos](https://code.claude.com/docs/en/permissions) · 2026-11-06 |
-| OpenCode V2 | `~/.config/opencode/AGENTS.md` | `~/.config/opencode/skills`; también lee `~/.claude/skills` y `~/.agents/skills` | `~/.config/opencode/agents/<nombre>.md`, modo `subagent` | `mcp.servers` en `~/.config/opencode/opencode.json(c)` | `permissions` y plugins; no hay archivo de hooks | No probado | [reglas](https://docs.opencode.ai/docs/rules/) · [config V2](https://opencode.ai/v2/docs/config/) · [migración](https://opencode.ai/v2/docs/migrate-v1/) · [skills](https://opencode.ai/docs/skills/) · [agentes](https://opencode.ai/docs/agents/) · [permisos](https://opencode.ai/docs/permissions/) · 2026-11-06 |
+| OpenCode V2 | `~/.config/opencode/AGENTS.md` | `~/.config/opencode/skills`; también lee `~/.claude/skills` y `~/.agents/skills` | `~/.config/opencode/agents/<nombre>.md`, modo `subagent` | `mcp.servers` en `~/.config/opencode/opencode.json(c)` | `permissions` y plugins; no hay archivo de hooks | Parcial: ver [su adaptador](opencode/README.md#qué-se-probó-y-qué-no) | [reglas](https://docs.opencode.ai/docs/rules/) · [config V2](https://opencode.ai/v2/docs/config/) · [migración](https://opencode.ai/v2/docs/migrate-v1/) · [skills](https://opencode.ai/docs/skills/) · [agentes](https://opencode.ai/docs/agents/) · [permisos](https://opencode.ai/docs/permissions/) · 2026-11-06 |
 | Codex CLI | `~/.codex/AGENTS.md`, hasta 32 KiB combinados | `~/.agents/skills` | `~/.codex/agents/`, **TOML** | `[mcp_servers.<nombre>]` en `~/.codex/config.toml` | `~/.codex/hooks.json`, `sandbox_mode`, `approval_policy` y `~/.codex/rules/default.rules` | No probado | [AGENTS.md](https://learn.chatgpt.com/docs/agent-configuration/agents-md) · [skills](https://learn.chatgpt.com/docs/build-skills) · [agentes](https://learn.chatgpt.com/docs/agent-configuration/subagents) · [MCP](https://learn.chatgpt.com/docs/extend/mcp?surface=cli) · [hooks](https://learn.chatgpt.com/docs/hooks) · [permisos](https://learn.chatgpt.com/docs/agent-approvals-security) · 2026-11-06 |
 | ChatGPT web / Work | No confirmado | No confirmado | No confirmado | No lee `~/.codex/config.toml` en la web; lo demás, no confirmado | No confirmado | No probado | [MCP](https://learn.chatgpt.com/docs/extend/mcp?surface=cli) · [agentes](https://learn.chatgpt.com/docs/agent-configuration/subagents) · [personalización](https://learn.chatgpt.com/docs/customization/overview) · 2026-11-06 |
 | Antigravity | `~/.gemini/AGENTS.md`, hasta 24 KB por archivo | `~/.gemini/config/skills/<carpeta>/` | `~/.gemini/config/agents/<nombre>.md` | `~/.gemini/config/mcp_config.json` | `~/.gemini/config/hooks.json`; permisos en Settings (App) o `~/.gemini/antigravity-cli/settings.json` (CLI) | No probado | [reglas](https://antigravity.google/docs/rules) · [skills](https://antigravity.google/docs/skills) · [agentes](https://antigravity.google/docs/subagents) · [MCP](https://antigravity.google/docs/mcp) · [hooks](https://antigravity.google/docs/hooks) · [permisos](https://antigravity.google/docs/permissions) · 2026-11-06 |
@@ -42,8 +42,10 @@ Avisos por herramienta:
 
 ## Otros agentes
 
-Nada de esta sección está probado. Prepara primero tu perfil fuera del repo, para
-que `git pull` no choque con él:
+Ninguna instalación de esta sección está probada. Lo único ejecutado es el
+[adaptador de OpenCode](opencode/README.md#qué-se-probó-y-qué-no): su plugin y sus
+reglas `ask`. Prepara primero tu perfil fuera del repo, para que `git pull` no choque
+con él:
 
 ```bash
 cp -n core/PROFILE.md ~/PROFILE.md
@@ -76,11 +78,11 @@ cp -n agents/*.md ~/.config/opencode/agents/
 Los agentes no valen tal cual. En el frontmatter de cada copia en
 `~/.config/opencode/agents/`, pon el modo `subagent`, cambia `model: sonnet` por un
 modelo gratuito (de otra familia en el revisor) y sustituye `tools` y
-`disallowedTools` por permisos de OpenCode. Después recarga y comprueba:
+`disallowedTools` por permisos de OpenCode.
 
-```bash
-opencode reload
-```
+**Este paso es obligatorio:** sigue [Instalar](opencode/README.md#instalar) en el
+adaptador de OpenCode. Sin él no tienes ninguna barrera, y `rules.md` exige un script
+que no estaría. Después comprueba los agentes:
 
 ```bash
 opencode debug agents
@@ -95,7 +97,7 @@ la copia de skills sobra.
 | Garantía de calidad | Un modelo superior coordina | Revisión cruzada entre familias |
 | Si se acaba la cuota | Esperar o bajar de modelo | Cadena de respaldo |
 | Memoria | Memoria de archivos del agente | `MEMORY.md` en disco |
-| Barreras duras | Permisos y hooks | Permisos; los hooks de Claude no se trasladan |
+| Barreras duras | Permisos con `deny` y hooks | Plugin `guard` y reglas `ask`, sin `deny`: ver [Qué cubre y qué no](opencode/README.md#qué-cubre-y-qué-no) |
 
 En ambos, Engram es opcional. La lista de modelos gratuitos no se publica aquí
 porque cambia rápido: compruébala con la tool `models`.
@@ -165,6 +167,7 @@ No editas archivos. Cierras con APROBADO o CAMBIOS_NECESARIOS, con evidencia.
 Tras `git pull`, desde tu copia de `withIA`:
 
 - **Documento**: repite el `cat` de tu agente.
+- **Barreras de OpenCode**: ver [Instalar](opencode/README.md#instalar) en su adaptador.
 - **Skills**: copia sin `-n`, porque `cp -n` no pisa nada. Usa la línea de tu agente:
 
   ```bash

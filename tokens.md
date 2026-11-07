@@ -107,21 +107,20 @@ terceros:
 
 | Pieza | Bytes | Tokens aprox. |
 |---|---|---|
-| `core/AGENTS.md` | 8897 | 2542 |
+| `core/AGENTS.md` | 9738 | 2782 |
 | `core/PROFILE.md`, plantilla sin rellenar | 1915 | 547 |
-| `CLAUDE.md` del adaptador | 907 | 259 |
-| Descripciones de las 4 skills | 1545 | 441 |
-| Descripciones de los 3 agentes | 952 | 272 |
-| **Total** | **14216** | **4062** |
+| `CLAUDE.md` del adaptador | 817 | 233 |
+| Descripciones de las 5 skills | 1848 | 528 |
+| Descripciones de los 3 agentes | 910 | 260 |
+| **Total** | **15228** | **4351** |
 
 | Afirmación | Fórmula | Confianza |
 |---|---|---|
-| El paquete equivale a aprox. un 4.14% de nuestro arranque medio | 14216 / 3.5 = 4062; 4062/98174 = 4.14% | Baja: compara bytes del paquete con un arranque medido con otra configuración; ninguna sesión lo ha cargado |
-| `core/AGENTS.md` creció un 35% al reescribirlo: el proceso nuevo se paga en cada sesión | 6579 bytes antes, 8897 después; 8897/6579 = 1.34 | Alta, medido en bytes |
+| El paquete equivale a aprox. un 4.43% de nuestro arranque medio | 15228 / 3.5 = 4351; 4351/98174 = 4.43% | Baja: compara bytes del paquete con un arranque medido con otra configuración; ninguna sesión lo ha cargado |
+| `core/AGENTS.md` creció un 48% desde antes de reescribirlo: el proceso nuevo se paga en cada sesión | 6579 bytes antes, 9738 hoy; 9738/6579 = 1.48 | Alta, medido en bytes |
 
-Esta tabla se midió el 2026-11-06 y no se ha repetido. Desde entonces el paquete suma
-`hardening-server-writes` (356 bytes de descripción) y `rules/frontend.md` (2050
-bytes, que sólo se cargan al tocar archivos de interfaz).
+Medido el 2026-11-07 sobre los archivos, con `wc -c`. La tabla no cuenta
+`rules/frontend.md` (2050 bytes), que sólo se carga al tocar archivos de interfaz.
 
 ## Poda de la lista de skills
 
