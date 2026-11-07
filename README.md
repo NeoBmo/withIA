@@ -1,21 +1,55 @@
+<p align="center">
+  <img src="assets/banner.svg" alt="withIA: un pequeño agente de piel terracota aprieta con una llave inglesa un tornillo de una ventana de terminal." width="100%">
+</p>
+
 # withIA
 
-Cómo trabajamos Luis ([NeoBmo](https://github.com/NeoBmo)) y Claude para programar:
-el proceso, las reglas y las herramientas, con el porqué de cada decisión, para
-copiarlo, discutirlo o descartarlo. Es nuestro proceso escrito como paquete; su
-estado de prueba está en [Dónde funciona](#dónde-funciona).
+**Para quien programa solo con un agente de IA.** Aquí está escrito cómo trabajamos
+Luis ([NeoBmo](https://github.com/NeoBmo)), desarrollador autodidacta, y Claude: qué
+usamos, cómo lo usamos y qué no ha funcionado, para que lo copies, lo discutas o lo
+descartes. También es nuestra copia de seguridad: si Luis cambia de computador,
+restaura desde aquí su forma de trabajar.
 
-- **Evidencia antes que confianza.** Nada se da por terminado sin tests, navegador
-  o una revisión independiente. Lo no probado se marca como no probado.
-- **Autonomía con barreras.** El agente hace solo lo rutinario y consulta lo
-  crucial. Lo que no debe pasar nunca va en permisos y hooks, no en su memoria.
-- **Configuración global.** Se instala una vez, a nivel de usuario, y cualquier
-  proyecto se abre sin configurar nada.
+**No es** un curso, un producto ni un método para equipos. Tampoco es garantía de
+nada: que sepamos, nadie ajeno lo ha instalado todavía. El estado real está en
+[Qué está probado](adapters/README.md#qué-está-probado).
 
-> **In English:** how we (Luis, a self-taught frontend developer, and Claude) work
-> with AI coding agents: evidence first, autonomy with hard guardrails, one global
-> setup. The content is in Spanish. Start with
-> [core/AGENTS.md](core/AGENTS.md) and [adapters/README.md](adapters/README.md).
+**Necesitas** una terminal, [Git](https://git-scm.com/downloads),
+[Node.js](https://nodejs.org/en/download) y
+[Claude Code](https://code.claude.com/docs/en/quickstart), que es de pago.
+[OpenCode](https://opencode.ai) es la alternativa gratuita, con menos barreras:
+[Compatibilidad](adapters/other-agents.md#compatibilidad). ¿Sólo usas ChatGPT en el
+navegador? No necesitas nada: [empieza por aquí](copy-this-system.md#a-empieza-hoy-sin-instalar-nada).
+
+| Si... | Entra por |
+|---|---|
+| Eres nuevo en IA | [glossary.md](glossary.md): qué es todo esto, en palabras llanas |
+| Quieres copiarlo | [copy-this-system.md](copy-this-system.md): tres caminos, con un prompt listo para pegar |
+| Quieres entender el método | [core/AGENTS.md](core/AGENTS.md): escrito para el agente, se lee mejor con el glosario a mano |
+
+> **In English:** how a solo self-taught developer works with AI coding agents:
+> evidence first, autonomy with hard guardrails, one global setup. The content is in
+> Spanish. Start with [core/AGENTS.md](core/AGENTS.md).
+
+## La idea
+
+Una persona sólo puede hacer una tarea a la vez. Luis trabaja solo, de la idea a la
+revisión, y en ese trabajo la IA es amigo, maestro y compañero: no sólo acelera,
+también evalúa, corrige y prueba. La persona aporta el criterio, que es creatividad
+aprendida del entorno, y decide. Un modelo predice qué texto sigue según el
+[contexto](glossary.md#contexto): por eso resuelve problemas complejos y por eso
+nada se da por bueno sin comprobarlo.
+
+## Quién hace qué
+
+| Quién | Qué es | Qué hace | Dónde |
+|---|---|---|---|
+| **La persona** | Tú | Decide lo crucial y responde del resultado | [Autonomía](core/AGENTS.md#autonomía) |
+| **Coordinador** | La sesión principal del agente | Afina el pedido, fija el criterio, reparte y juzga | [Coordinador](core/AGENTS.md#coordinador) |
+| `implementer` | Subagente | Ejecuta una tarea acotada y devuelve evidencia | [agents/implementer.md](agents/implementer.md) |
+| `reviewer` | Subagente con contexto limpio | Juzga un cambio que no escribió | [agents/reviewer.md](agents/reviewer.md) |
+| `writer` | Subagente | Documenta lo que existe, contrastado con el código | [agents/writer.md](agents/writer.md) |
+| **Barreras** | Permisos y hooks | Frenan lo peligroso aunque el agente lo olvide | [Barreras](adapters/README.md#barreras) |
 
 ## El bucle
 
@@ -25,63 +59,52 @@ entender → planificar (si aporta) → actuar → evaluar con evidencia → cer
                                       └──── ajustar ───┘  máximo 3 intentos
 ```
 
-Por qué así: el fallo típico de un agente es declarar terminado algo que no
-comprobó, así que el criterio se fija antes y se recomprueba tras cada delegación.
-Reformular cuesta poco y evita construir lo que nadie pidió. El modelo se elige
-por el coste de equivocarse: una migración de una línea merece el mejor; renombrar
-cuarenta archivos, no. Las reglas exactas están en [core/AGENTS.md](core/AGENTS.md).
-
-## Quién hace qué
-
-| Quién | Qué hace | Dónde está |
-|---|---|---|
-| **Documento madre** | Se carga en cada sesión y actúa como prompt del coordinador. Está partido en dos: proceso común, que se actualiza, y persona, que no se pisa | [core/AGENTS.md](core/AGENTS.md), [core/PROFILE.md](core/PROFILE.md) |
-| **Coordinador** | Es la sesión principal: afina el pedido, fija el criterio, hace directo lo pequeño, reparte lo grande y juzga | Sin archivo propio: [Coordinador](core/AGENTS.md#coordinador) |
-| `implementer` | Ejecuta una tarea acotada y devuelve evidencia | [agents/implementer.md](agents/implementer.md) |
-| `reviewer` | Juzga el cambio con contexto limpio | [agents/reviewer.md](agents/reviewer.md) |
-| `writer` | Documenta lo que existe, contrastado con el código | [agents/writer.md](agents/writer.md) |
-| Skills | Preparar un proyecto, planificar, admitir herramientas y revisar una web antes de publicarla | [discover](skills/discover/SKILL.md), [sdd](skills/sdd/SKILL.md), [vet](skills/vet/SKILL.md), [web-quality-gate](skills/web-quality-gate/SKILL.md) |
-| Terceros | Opcionales, con autor y licencia, enlazados si tienen repo público, nunca copiados | [tools.md](tools.md) |
-| La persona | Decide lo crucial y define cómo quiere trabajar | [Autonomía](core/AGENTS.md#autonomía), [core/PROFILE.md](core/PROFILE.md) |
-| Configuración | Instalación, permisos y hooks | [adapters/README.md](adapters/README.md) |
+El fallo típico de un agente es declarar terminado algo que no comprobó. Por eso el
+criterio se fija antes de empezar y lo juzga quien no hizo el trabajo.
 
 ## Un ejemplo real
 
-La evaluación del plugin [Superpowers](https://github.com/obra/superpowers) en
-este repo, resumida. La sesión evaluó otra herramienta más; aquí seguimos ésta.
+La corrección de nuestro [hook](glossary.md#hook) contra commits en `main`, en este
+repo. Se hizo con subagentes en esos papeles desde un flujo automático.
 
-1. **Pedido.** Un inventario detectó un plugin global sin ficha en el catálogo. La
-   orden fue de una línea: evaluarlo.
-2. **Reformulación.** Pasarlo por la puerta de [vet](skills/vet/SKILL.md) y acabar
-   en un veredicto escrito, sin instalar ni desactivar nada antes de aprobarlo.
-3. **Evidencia.** Leímos sus hooks y scripts, contamos en las transcripciones qué
-   se usaba (una sola de sus skills, en pocas sesiones) y calculamos su peso en el
-   contexto ([tokens.md](tokens.md)). También apareció un error nuestro:
-   `systematic-debugging` figuraba como propia y viene de ese proyecto.
-4. **Veredicto.** No es malicioso, pero se rechaza como plugin global: inyecta en
-   cada sesión un segundo proceso obligatorio que compite con el nuestro.
-5. **Cierre.** Respuesta corta: veredicto, qué cambiaría y qué no quedó verificado
-   (sus skills se revisaron por patrones, no enteras). Con el sí, se desactivó y
-   corregimos la atribución. Las sesiones nuevas ya no lo listan; su efecto en una
-   sesión de trabajo sigue sin observarse ([tokens.md](tokens.md)).
+1. **Cambio.** Un subagente apartó del análisis lo que iba entre comillas, para que
+   `echo 'git commit'` no bloqueara por error.
+2. **Revisión.** Otro subagente, sin haber visto cómo se hizo, comparó en un repo
+   desechable con la versión anterior: `bash -c "git commit -m x"` antes se
+   bloqueaba y ahora pasaba. Arreglar un falso positivo había abierto un agujero.
+   Fue un `CAMBIOS_NECESARIOS` en la práctica: un hallazgo en una lista, al que hoy
+   el contrato del `reviewer` da ese nombre.
+3. **Decisión.** El revisor propuso añadir excepciones. El coordinador eligió lo
+   contrario: quitar el apartado de comillas. Mencionar un commit puede bloquear de
+   más, y ése es el lado seguro.
+4. **Corrección y cierre.** Código más simple, 57 casos en repos desechables y una
+   comprobación independiente que lo aprobó con tres detalles, arreglados antes del
+   commit [`cff3bc3`](https://github.com/NeoBmo/withIA/commit/cff3bc3).
 
-## Dónde funciona
+Sigue imperfecto, y está escrito: el hook no ve `merge` ni alias, y la barrera real
+es la protección de rama en GitHub. Ver [Barreras](adapters/README.md#barreras).
 
-| Agente | Estado |
-|---|---|
-| Claude Code | Ver [Qué está probado](adapters/README.md#qué-está-probado) |
-| OpenCode, Codex CLI, Antigravity, Cursor, Copilot CLI, Gemini CLI | Ver [Compatibilidad](adapters/other-agents.md#compatibilidad) |
-| ChatGPT web o Work | Soporte no confirmado |
+## Lo nuestro y lo de otros
+
+| | Qué | Dónde |
+|---|---|---|
+| **Creado por nosotros** | Doctrina, agentes, skills, hooks y la medición de consumo | [skills.md](skills.md), [core/](core/AGENTS.md), [adapters/](adapters/README.md), [tokens.md](tokens.md) |
+| **Recomendado** | Skills de expertos, MCP y plugins, también los de Anthropic, con autor y enlace | [tools.md](tools.md) |
+
+Nada nace de cero. El bucle y los roles son conocimiento común, y varias ideas
+coinciden con [Superpowers](https://github.com/obra/superpowers) o con las guías de
+Anthropic. Lo más propio es la admisión de herramientas con caducidad, separar
+proceso y perfil, y llevar un registro público de lo no probado.
 
 ## Qué no prometemos
 
-- **Ningún porcentaje de ahorro global.** No hay grupo de control: ver
+- **Ningún porcentaje de ahorro.** No hay grupo de control:
   [tokens.md](tokens.md).
 - **Mejor calidad o más velocidad.** No medido, y los datos son de una persona.
-- **Barreras absolutas.** Sus límites están en
-  [Barreras](adapters/README.md#barreras).
+- **Barreras absolutas.** Cada una tiene límites, y están escritos.
 
-## Licencia
+## Sugerencias y licencia
 
-[MIT](LICENSE). Las herramientas de terceros que enlazo conservan su propia
-licencia.
+Si ves algo mal o tienes una forma mejor de hacerlo, cuéntanoslo:
+[CONTRIBUTING.md](CONTRIBUTING.md). [MIT](LICENSE); las herramientas de terceros que
+enlazamos conservan su licencia.

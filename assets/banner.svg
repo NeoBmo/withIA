@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 420" width="1280" height="420" role="img" aria-labelledby="banner-title banner-desc">
+  <title id="banner-title">withIA</title>
+  <desc id="banner-desc">Un pequeño agente de piel terracota, con linterna frontal y cinturón de herramientas, aprieta con una llave inglesa un tornillo de una ventana de terminal. La terminal muestra un commit bloqueado en main y, después, los tests pasando en una rama de tarea.</desc>
+  <style>
+    :root {
+      --paper: #f4ecdf;
+      --dots: #d9ccb8;
+      --ink: #231c16;
+      --muted: #6a5c4e;
+      --line: #231c16;
+      --shadow: #231c16;
+      --term: #2b241e;
+      --term-bar: #3a3028;
+      --term-text: #f4ecdf;
+      --term-muted: #b5a792;
+      --steel: #8f949a;
+      --steel-dark: #5d6268;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --paper: #17130f;
+        --dots: #332a22;
+        --ink: #f4ecdf;
+        --muted: #b5a792;
+        --line: #f4ecdf;
+        --shadow: #000000;
+        --term: #241d18;
+        --term-bar: #342b24;
+        --steel: #b6bbc0;
+        --steel-dark: #7f858b;
+      }
+    }
+    text { font-family: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; }
+    .paper { fill: var(--paper); }
+    .dots { fill: var(--dots); }
+    .ink { fill: var(--ink); }
+    .muted { fill: var(--muted); }
+    .accent { fill: #c8603f; }
+    .frame { fill: var(--term); stroke: var(--line); stroke-width: 4; }
+    .bar { fill: var(--term-bar); }
+    .shadow { fill: var(--shadow); }
+    .term { fill: var(--term-text); }
+    .term-muted { fill: var(--term-muted); }
+    .stroke { stroke: var(--line); stroke-width: 4; stroke-linejoin: round; stroke-linecap: round; }
+    .steel { fill: var(--steel); }
+    .steel-dark { fill: var(--steel-dark); }
+  </style>
+  <defs>
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.6" class="dots"/>
+    </pattern>
+    <polygon id="bolt" points="15,0 7.5,13 -7.5,13 -15,0 -7.5,-13 7.5,-13"/>
+  </defs>
+
+  <rect width="1280" height="420" rx="26" class="paper"/>
+  <rect width="1280" height="420" rx="26" fill="url(#grid)"/>
+
+  <!-- Marca -->
+  <g>
+    <text x="64" y="122" font-size="19" font-weight="600" letter-spacing="3.2" class="muted">UNA PERSONA. UN AGENTE.</text>
+    <text x="60" y="226" font-size="104" font-weight="800" letter-spacing="-3" class="ink">with<tspan class="accent">IA</tspan></text>
+    <rect x="66" y="252" width="86" height="8" class="accent"/>
+    <text x="64" y="304" font-size="24" font-weight="500" class="ink">Tú decides. El agente hace,</text>
+    <text x="64" y="338" font-size="24" font-weight="500" class="ink">evalúa y prueba.</text>
+  </g>
+
+  <!-- Ventana de terminal, un poco torcida: aún está en reparación -->
+  <g transform="rotate(-1.6 840 210)">
+    <rect x="574" y="74" width="520" height="280" rx="14" class="shadow"/>
+    <rect x="562" y="62" width="520" height="280" rx="14" class="frame"/>
+    <path d="M564 104 V76 a12 12 0 0 1 12 -12 H1068 a12 12 0 0 1 12 12 V104 Z" class="bar"/>
+    <circle cx="594" cy="84" r="7" class="term-muted"/>
+    <circle cx="618" cy="84" r="7" class="term-muted"/>
+    <circle cx="642" cy="84" r="7" class="term-muted"/>
+    <text x="672" y="90" font-size="17" class="term-muted">~/mi-proyecto</text>
+
+    <g font-size="20">
+      <text x="590" y="144" class="term"><tspan class="term-muted">$ </tspan>git commit -m "listo"</text>
+      <path d="M592 164 l11 11 m0 -11 l-11 11" stroke="#e0785a" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+      <text x="616" y="176" fill="#e0785a">Bloqueado: rama main</text>
+      <text x="590" y="216" class="term"><tspan class="term-muted">$ </tspan>git switch -c feat/tarea</text>
+      <text x="590" y="256" class="term"><tspan class="term-muted">$ </tspan>npm test</text>
+      <path d="M591 282 l5 6 l9 -12" stroke="#9fbf7a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <text x="616" y="288" fill="#9fbf7a">los tests pasan</text>
+      <text x="590" y="320" class="term-muted">$</text>
+      <rect x="610" y="303" width="12" height="21" class="term"/>
+    </g>
+
+  </g>
+
+  <!-- Haz de la linterna hacia el tornillo -->
+  <path d="M1183 262 L1052 176 L1044 226 Z" fill="#e8b84a" fill-opacity="0.32"/>
+
+  <!-- Tornillo que se está apretando -->
+  <g transform="translate(1058 196) rotate(12)">
+    <use href="#bolt" class="steel stroke" transform="scale(1.25)"/>
+    <circle r="5.5" class="steel-dark"/>
+  </g>
+
+  <!-- Chispas -->
+  <path d="M1018 158 l-12 -9 M1040 148 l-3 -14 M1000 182 l-14 -2" stroke="#e8b84a" stroke-width="4" stroke-linecap="round" fill="none"/>
+
+  <!-- Tornillo de repuesto, en el suelo -->
+  <use href="#bolt" x="1118" y="372" class="steel stroke"/>
+
+  <!-- Pies -->
+  <rect x="1160" y="364" width="36" height="22" rx="11" fill="#7d3a26" stroke="#231c16" stroke-width="4"/>
+  <rect x="1212" y="364" width="36" height="22" rx="11" fill="#7d3a26" stroke="#231c16" stroke-width="4"/>
+
+  <!-- Cuerpo: canto rodado de barro, no un bloque ni una estrella -->
+  <path d="M1204 244 C1244 244 1266 276 1266 316 C1266 352 1240 376 1204 376 C1168 376 1142 352 1142 316 C1142 276 1164 244 1204 244 Z" fill="#c8603f" stroke="#231c16" stroke-width="4"/>
+  <path d="M1234 262 C1252 276 1258 300 1254 326" stroke="#e08a6a" stroke-width="7" stroke-linecap="round" fill="none"/>
+
+  <!-- Cinturón con bolsa -->
+  <path d="M1144 334 C1180 346 1228 346 1264 334 L1262 348 C1228 360 1180 360 1148 348 Z" fill="#231c16"/>
+  <rect x="1218" y="340" width="26" height="24" rx="5" fill="#e8b84a" stroke="#231c16" stroke-width="3"/>
+
+  <!-- Cinta y linterna frontal -->
+  <path d="M1150 282 C1180 268 1226 266 1260 280" stroke="#231c16" stroke-width="8" stroke-linecap="round" fill="none"/>
+  <rect x="1168" y="258" width="30" height="24" rx="7" fill="#e8b84a" stroke="#231c16" stroke-width="3.5"/>
+  <circle cx="1176" cy="270" r="5" fill="#fff4d6"/>
+
+  <!-- Cara, mirando al tornillo -->
+  <circle cx="1176" cy="306" r="7" fill="#231c16"/>
+  <circle cx="1210" cy="306" r="7" fill="#231c16"/>
+  <circle cx="1174" cy="304" r="2.2" fill="#f4ecdf"/>
+  <circle cx="1208" cy="304" r="2.2" fill="#f4ecdf"/>
+  <path d="M1184 324 q9 7 18 0" stroke="#231c16" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+
+  <!-- Llave inglesa -->
+  <g transform="translate(1060 200) rotate(-58)">
+    <path fill-rule="evenodd" d="M-12 -23 L-12 -3 L12 -3 L12 -23 A26 26 0 0 1 8 24.7 L8 104 A8 8 0 0 1 -8 104 L-8 24.7 A26 26 0 0 1 -12 -23 Z M0 98 m-3.5 0 a3.5 3.5 0 1 0 7 0 a3.5 3.5 0 1 0 -7 0 Z" class="steel stroke"/>
+  </g>
+
+  <!-- Brazo y mano sobre la llave -->
+  <path d="M1150 302 C1138 296 1136 284 1148 272" stroke="#231c16" stroke-width="15" stroke-linecap="round" fill="none"/>
+  <path d="M1150 302 C1138 296 1136 284 1148 272" stroke="#c8603f" stroke-width="9" stroke-linecap="round" fill="none"/>
+  <circle cx="1149" cy="264" r="11" fill="#c8603f" stroke="#231c16" stroke-width="4"/>
+</svg>
