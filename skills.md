@@ -57,11 +57,17 @@ la menos probada por otras personas.
 | [discover](skills/discover/SKILL.md) | Prepara un repo nuevo y crea su documento de instrucciones | 0 | 395 | Medio | Vigilar |
 | [web-quality-gate](skills/web-quality-gate/SKILL.md) | Comprueba una web antes de publicarla: accesibilidad, rendimiento, SEO, seguridad, cookies y legal | 0 | 328 | Sin datos | Vigilar |
 | [hardening-server-writes](skills/hardening-server-writes/SKILL.md) | Protege una escritura de servidor contra carreras, reintentos y clientes que mienten | 0 | 386 | Sin datos | Vigilar |
+| [readme-craft](skills/readme-craft/SKILL.md) | Escribe o audita un README con identidad propia, rúbrica sobre 12 y banner SVG | 0 | ≈360 | Sin datos | Vigilar |
 
-`web-quality-gate` entró el 2026-11-06 y `hardening-server-writes` el 2026-11-07:
-su 0 no dice nada todavía. Las dos cubren casos reales sobre el papel, y
-`hardening-server-writes` tiene una prueba propia en
+`web-quality-gate` entró el 2026-11-06, `hardening-server-writes` el 2026-11-07 y
+`readme-craft` el 2026-11-15: su 0 no dice nada todavía.
+
+`web-quality-gate` y `hardening-server-writes` cubren casos reales sobre el papel, y
+la segunda tiene una prueba propia en
 [Prueba de hardening-server-writes](#prueba-de-hardening-server-writes).
+
+`readme-craft` entró después de la medición: sus bytes salen de su frontmatter, y
+no está en los totales de esta página.
 
 ### Agentes
 
