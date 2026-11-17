@@ -63,6 +63,9 @@ Un análisis automático no sustituye esta lista: sólo detecta parte de los fal
 
 ### SEO (web pública)
 
+En un sitio Astro sobre GitHub Pages, cómo cumplir estos criterios está en la skill
+`astro-pages-seo`.
+
 - `<title>` único y `meta description` propia en cada página indexable. No hay
   límite oficial de caracteres: lo que importa es que sean específicos, sin relleno.
 - Un `h1` claro, HTTPS, URL legibles y `canonical` donde haga falta.
