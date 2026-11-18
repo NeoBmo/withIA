@@ -195,6 +195,7 @@ Viven en el layout base, con valores por defecto y `props` por página:
   WhatsApp tiene su propia caché: que el Sharing Debugger la refresque no está
   garantizado. Si sigue mostrando la vieja, márcalo `NO VERIFICADO` en vez de
   insistir.
+- La velocidad de carga no es de esta skill: mídela con `slow-network-check`.
 
 ## 7. Workflow de Pages
 
