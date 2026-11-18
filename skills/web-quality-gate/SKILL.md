@@ -58,6 +58,8 @@ Un análisis automático no sustituye esta lista: sólo detecta parte de los fal
   INP ≤ 200 ms, CLS ≤ 0.1.
 - Sin datos de campo, una medición de laboratorio es una **estimación**: dilo. INP
   necesita interacciones reales.
+- Con público en móvil, mide qué se ve con red lenta con la skill
+  `slow-network-check`.
 - Imágenes con dimensiones y tamaño adecuado; lo que no está en la primera vista,
   con carga diferida; fuentes y scripts de terceros justificados.
 
