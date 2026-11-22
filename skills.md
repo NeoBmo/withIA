@@ -60,10 +60,14 @@ la menos probada por otras personas.
 | [readme-craft](skills/readme-craft/SKILL.md) | Escribe o audita un README con identidad propia, rúbrica sobre 12 y banner SVG | 0 | ≈360 | Sin datos | Vigilar |
 | [astro-pages-seo](skills/astro-pages-seo/SKILL.md) | SEO técnico y vistas previas al compartir en un sitio Astro sobre GitHub Pages | 0 | ≈365 | Sin datos | Vigilar |
 | [slow-network-check](skills/slow-network-check/SKILL.md) | Mide qué se ve y cuándo con red móvil lenta, con capturas y un script sin dependencias | 0 | ≈340 | Sin datos | Vigilar |
+| [council](skills/council/SKILL.md) | Consejo de cinco lentes, revisión cruzada anónima y veredicto para una decisión cara o difícil de revertir | 0 | 231 | Sin datos | Vigilar |
+| [modern-web](skills/modern-web/SKILL.md) | Busca en local, en las guías de Google Chrome, si la plataforma web ya resuelve lo que vas a construir | 0 | 286 | Sin datos | Vigilar |
 
 `web-quality-gate` entró el 2026-11-06, `hardening-server-writes` el 2026-11-07,
-`readme-craft` el 2026-11-15, `astro-pages-seo` el 2026-11-17 y
-`slow-network-check` el 2026-11-18: su 0 no dice nada todavía.
+`readme-craft` el 2026-11-15, `astro-pages-seo` el 2026-11-17,
+`slow-network-check` el 2026-11-18, y `council` y `modern-web` el 2026-11-22: su 0
+no dice nada todavía. `modern-web` necesita las guías de terceros que instala su
+propio `SKILL.md`.
 
 `web-quality-gate` y `hardening-server-writes` cubren casos reales sobre el papel, y
 la segunda tiene una prueba propia en
@@ -118,6 +122,7 @@ cada fuente. Si dos skills hacen lo mismo, gana la que ya usamos.
 | [review-animations](https://github.com/emilkowalski/skills) | Critica el movimiento existente con un listón alto. Manual | Emil Kowalski, MIT | 0 | 0 | Medio | Mantener |
 | [grilling](https://github.com/mattpocock/skills), *sin evaluar* | Te interroga sobre un plan hasta que no queda nada sin decidir | Matt Pocock, MIT | 0 | 164 | Medio | Vigilar |
 | [industrial-brutalist-ui](https://github.com/Leonxlnx/taste-skill-classics) | Un estilo visual mecánico, con carácter. Manual | Leonxlnx, MIT | 0 | 0 | Medio | Mantener |
+| [security-audit](https://github.com/cloudflare/security-audit-skill) | Auditoría de seguridad defensiva con hallazgos verificados por otro agente; modo guía por defecto | Cloudflare, MIT | 0 | 359 | Sin datos | Vigilar |
 | [web-design-guidelines](https://github.com/vercel-labs/web-interface-guidelines), *sin evaluar* | Revisa UI contra una guía remota que descarga en cada uso, fijada a un commit en nuestra copia | Vercel, licencia sin confirmar | 0 | 209 | Bajo | Retirar |
 
 `web-design-guidelines` es la propuesta más clara: no tiene usos y se solapa con
