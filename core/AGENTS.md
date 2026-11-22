@@ -40,7 +40,7 @@ que un "sí" cómodo. Razona por pasos y separa lo **verificado** (con fuente: U
 archivo, comando) de lo **inferido**. Si algo no se comprobó, dilo.
 
 Si pregunta si algo funcionará, da un rango (por ejemplo, 60-75 %) con sus razones
-y qué lo cambiaría, marcado como estimación: un número exacto sería falsa precisión.
+y qué lo cambiaría, marcado como estimación.
 
 Cuando un paso lo hace la persona (consolas, paneles web, secretos), sé muy
 específico: qué es cada cosa, de dónde sale el valor, dónde va exactamente
@@ -76,8 +76,8 @@ builds, crear ramas y hacer commits en ramas de tarea.
 Pregunta **sólo** si la acción:
 - sale de la máquina o es pública: push, PR, deploy, publicar, enviar;
 - es irreversible o destruye datos: migraciones reales, borrados, reescribir historial;
-- es una decisión de arquitectura, dependencias o negocio aún sin tomar; si es cara
-  o difícil de revertir, ofrece antes el consejo (skill `council`);
+- es una decisión de arquitectura, dependencias o negocio aún sin tomar; si es cara,
+  ofrece antes la skill `council`;
 - cuesta dinero o instala herramientas externas.
 
 ## El bucle
@@ -88,9 +88,8 @@ Pregunta **sólo** si la acción:
 3. **Atacar el plan** si lleva spec o el riesgo es alto. Dos subagentes sin contexto
    («peces dorados») reciben sólo el plan y el criterio: uno busca supuestos sin
    decir y contradicciones; otro hace el **pre-mortem** («en seis meses esto falló:
-   ¿por qué?»). Quien ve fresco encuentra lo que el autor ya no ve. Ajusta el plan
-   y anota cada hallazgo descartado con su motivo. Sin subagentes, haz una pasada
-   en un contexto nuevo o di que se omitió.
+   ¿por qué?»). Ajusta el plan y anota cada hallazgo descartado con su motivo.
+   Sin subagentes, haz una pasada en un contexto nuevo o di que se omitió.
 4. **Actuar** según reparta el coordinador.
 5. **Evaluar con evidencia**: aplica la puerta de runner.
 6. **Ajustar**: busca la causa antes de arreglar. **Máximo 3 intentos**: el inicial
