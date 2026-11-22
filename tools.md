@@ -9,7 +9,7 @@ funciona con el agente, Git y los tests del proyecto. Lo demás es opcional y
 nunca se instala por defecto. El inventario completo, con usos y valor de cada
 pieza, está en [skills.md](skills.md).
 
-Última revisión de la página: 2026-11-07. Los veredictos caducan a los 90 días,
+Última revisión de la página: 2026-11-22. Los veredictos caducan a los 90 días,
 porque las herramientas cambian rápido y un veredicto viejo puede ser falso. Cada
 fila lleva su fecha en la columna `Caduca`; una fila sin fecha no tiene veredicto
 vigente.
@@ -66,6 +66,19 @@ da autor y licencia, y enlace cuando hay un repo público que enlazar.
 | `emil-design-eng`, `animate`, `animation-performance`, `mobile-native`, `review-animations` | [emilkowalski/skills](https://github.com/emilkowalski/skills), de Emil Kowalski (MIT) | Pulido de UI y animación. Sólo 5 de 17 (a 2026-11-06) | No | 2027-01-20 |
 | `industrial-brutalist-ui` | [taste-skill-classics](https://github.com/Leonxlnx/taste-skill-classics), de Leonxlnx (MIT) | Un estilo visual con carácter, lejos del look "SaaS limpio" genérico. Sólo uno | No | 2027-01-20 |
 | `systematic-debugging` | [obra/superpowers](https://github.com/obra/superpowers), de Jesse Vincent (MIT) | Encontrar la causa antes de proponer un arreglo | No; [core/AGENTS.md](core/AGENTS.md) ya pide buscar la causa antes de arreglar | 2027-02-03 |
+| `security-audit` | [cloudflare/security-audit-skill](https://github.com/cloudflare/security-audit-skill), de Cloudflare (MIT), commit `c1c8a8c1471069fb0e188eeaff69b8e8db6564a8` | Auditoría de seguridad defensiva, con cada hallazgo verificado por otro agente. Modo guía por defecto; la auditoría completa sólo si se pide, con perfil `quick` o acotada a un área. Copiada sin cambios, con su `LICENSE`, sin el instalador `npx skills`. En Windows sus validadores se niegan a leer archivos (falta `O_NOFOLLOW`): ahí sólo modo guía, o la auditoría completa en WSL | No | 2027-02-20 |
+| Guías de [modern-web-guidance](https://github.com/GoogleChrome/modern-web-guidance) | Google Chrome: guías en CC-BY 4.0, código en Apache-2.0. Commit `64a6d708f5a43f2cd3fde5d4d7db3905ba1bdf65` | Las 210 guías de plataforma web, leídas en local por nuestra skill [modern-web](skills/modern-web/SKILL.md). Sin su skill original: ejecuta `npx -y modern-web-guidance@latest` en cada consulta y se declara obligatoria para todo HTML y CSS | No | 2027-02-20 |
+
+Instalación de `security-audit` en el commit fijado, en Git Bash:
+
+```bash
+curl -sL https://codeload.github.com/cloudflare/security-audit-skill/tar.gz/c1c8a8c1471069fb0e188eeaff69b8e8db6564a8 | tar -xz -C ~/.claude/skills --strip-components=2 security-audit-skill-c1c8a8c1471069fb0e188eeaff69b8e8db6564a8/skills/security-audit
+curl -sL https://raw.githubusercontent.com/cloudflare/security-audit-skill/c1c8a8c1471069fb0e188eeaff69b8e8db6564a8/LICENSE -o ~/.claude/skills/security-audit/LICENSE
+```
+
+Las guías se instalan como dice [modern-web](skills/modern-web/SKILL.md). Para
+actualizar cualquiera de las dos, se repasa la puerta revisando el diff entre el
+commit fijado y el nuevo.
 
 ### CLI
 
@@ -150,6 +163,8 @@ Hay que leerlo con cuidado:
 | Herramienta | Con qué nos quedamos | Caduca |
 |---|---|---|
 | [Ponytail](https://github.com/dietrichgebert/ponytail) | La idea, escrita en nuestras reglas. El plugin inyecta reglas en cada turno y gasta tokens | 2027-01-20 |
+| [Agent Reach](https://github.com/Panniantong/agent-reach) (v1.6.1, commit `a8ab1e9`) | Usar primero las herramientas propias, distinguir un fragmento del texto completo y parar ante un captcha o un límite en vez de reintentar. No se instala: navega con [CloakBrowser](https://github.com/CloakHQ/CloakBrowser), que se presenta como un Chromium que pasa todas las pruebas de detección de bots y cuyo binario tiene licencia propia, con todos los derechos reservados; y copia, en lectura, las cookies del sitio pedido desde tu navegador a uno propio. Lo que cubre ya lo hacen la búsqueda y la lectura web del agente, el navegador integrado y `gh` | 2027-02-20 |
+| [founder-skill](https://github.com/Jakeschincariol/founder-skill) (commit `fd9385b`) | Que una lente resume un marco publicado y nunca habla como la persona real, escrito en [council](skills/council/SKILL.md). Sus scripts son Python de la librería estándar, sin red. No se instala: un solo commit sin historial, llama a `python3`, que en Windows suele no existir, y su panel lanza 100 subagentes que simulan compradores, lo que parece evidencia de demanda y no lo es. Sus cálculos de unit economics y precios Van Westendorp quedan a mano para cuando un proyecto fije precios | 2027-02-20 |
 
 ## Pendientes de evaluar
 

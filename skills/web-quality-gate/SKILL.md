@@ -104,31 +104,21 @@ En un sitio Astro sobre GitHub Pages, cómo cumplir estos criterios está en la 
 Esta lista no es una auditoría de seguridad. En auth, pagos o datos sensibles, pide
 además revisión independiente.
 
-### Cookies
+### Legal y cookies
 
-Inventaria primero lo que la web instala de verdad, propio y de terceros: usa un
-perfil de navegador nuevo y comprueba que la URL es la correcta, porque el navegador
-puede estar compartido y las cookies de `127.0.0.1` se comparten entre puertos.
+Lista mínima; cada punto bloquea por sí solo:
 
-- Si sólo hay cookies técnicas necesarias, puede bastar con informar. No añadas un
-  banner que no hace falta.
-- Con público en la UE, las cookies no esenciales **no se instalan antes del
-  consentimiento**. Comprueba en la primera carga que analítica y publicidad no se
-  disparan, y que tras rechazar siguen sin dispararse.
-- Rechazar debe ser una opción real, y el consentimiento debe poder retirarse sin
-  perjuicio.
-- Existe un aviso que lista cookies, finalidad, duración y terceros.
-- En otra jurisdicción, comprueba su norma vigente. Si depende de una interpretación
-  jurídica, márcalo `NO VERIFICADO` y deja la pregunta a una persona competente.
+- Si la web trata datos personales, hay una política de privacidad enlazada desde
+  el pie.
+- Las cookies no esenciales **no se instalan antes del consentimiento** donde la
+  norma lo exija. Compruébalo en la primera carga, con un perfil de navegador nuevo,
+  y otra vez tras rechazar. Mira que la URL es la correcta: las cookies de
+  `127.0.0.1` se comparten entre puertos.
+- Cada formulario con datos personales enlaza la política, y su casilla de
+  consentimiento viene sin marcar.
 
-### Páginas legales
-
-- Enlazadas desde el pie de todas las páginas: privacidad y aviso de cookies, si aplican; términos si
-  hay cuentas, compras o contenido de usuarios.
-- Política de privacidad acorde con lo que se trata: quién es el responsable, qué
-  datos, para qué, con quién se comparten, y cómo ejercer los derechos.
-- En Colombia, revisa la Ley 1581 de 2012; en la UE, el RGPD.
-- Formularios con el aviso o consentimiento que corresponda.
+Después, un paso obligatorio: **carga la skill `legal-compliance` y adjunta su
+tabla**. Sin ella, el área legal queda `NO VERIFICADO`.
 
 **Nunca inventes datos legales**: razón social, identificación fiscal, dirección o
 contacto salen de la persona; si faltan, deja `[POR COMPLETAR]`. Un texto generado
@@ -156,8 +146,7 @@ Estados: `PASA`, `FALLA`, `NO APLICA`, `NO VERIFICADO`.
 
 - `BLOQUEA`: algún `FALLA` en funcionamiento principal, contraste, teclado o foco,
   secretos, exposición de archivos, autorización, dependencias críticas, `noindex`
-  en producción, cookies antes del consentimiento donde la norma lo exija, o una
-  política legal ausente o que no coincide con lo que la web trata.
+  en producción, o en un punto de la lista de «Legal y cookies».
 - `PASA CON PENDIENTES`: sin bloqueos, con fallos menores o criterios
   `NO VERIFICADO`; lístalos.
 - `LISTA`: todo `PASA` o `NO APLICA`, y los textos legales revisados por una

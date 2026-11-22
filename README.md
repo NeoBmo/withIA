@@ -54,13 +54,16 @@ nada se da por bueno sin comprobarlo.
 ## El bucle
 
 ```text
-entender → planificar (si aporta) → actuar → evaluar con evidencia → cerrar
-                                      ↑                │
-                                      └──── ajustar ───┘  máximo 3 intentos
+entender → planificar (si aporta) → atacar el plan (si hay spec o riesgo alto)
+  → actuar → evaluar con evidencia → cerrar
+      ↑                │
+      └──── ajustar ───┘  máximo 3 intentos
 ```
 
 El fallo típico de un agente es declarar terminado algo que no comprobó. Por eso el
-criterio se fija antes de empezar y lo juzga quien no hizo el trabajo.
+criterio se fija antes de empezar y lo juzga quien no hizo el trabajo. Con el plan
+pasa lo mismo: antes de actuar lo atacan dos agentes sin contexto, que ven lo que
+su autor ya no ve.
 
 ## Un ejemplo real
 

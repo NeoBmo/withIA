@@ -23,6 +23,7 @@ Por qué: decide los empates entre dos soluciones válidas.
 Por qué: evita repetir en cada sesión cómo quieres que te hablen.
 
 - Respóndeme en español y explica el porqué con un ejemplo concreto.
+- Directo y sin relleno, como en una conversación: tablas sólo para comparar.
 - Código, archivos y commits en inglés.
 
 ## Entorno y sus trampas
